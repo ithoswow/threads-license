@@ -6,7 +6,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # permite peticiones desde tu extensión
+    allow_origins=["*"],  # Permitir todas las fuentes
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
