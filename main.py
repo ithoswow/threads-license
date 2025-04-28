@@ -1,15 +1,16 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import json, datetime, os
+import json, datetime
 
 app = FastAPI()
 
+# Activar CORS correctamente
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Permitir todas las fuentes
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    allow_credentials=True
 )
 
 DB_FILE = "database.json"
