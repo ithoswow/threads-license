@@ -1,10 +1,10 @@
 {
   "ABCD-1234": {
     "device_id": "EQUIPO-1",
-    "expires": "2025-05-31"
+
   },
   "XYZ-9999": {
     "device_id": "EQUIPO-2",
-    "expires": "2025-06-15"
+  
   }
 }
