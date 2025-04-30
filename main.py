@@ -16,7 +16,7 @@ app.add_middleware(
 DB_FILE = "database.json"
 
 def load_db():
-    with open(DB_FILE, "r") as f:
+    with open("database.json", "r") as f:
         return json.load(f)
 
 @app.get("/validar")
