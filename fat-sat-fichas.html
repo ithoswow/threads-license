@@ -32,103 +32,78 @@ body{
 h1,h2,h3,h4{margin:0}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
-/* ---------- cabecera ---------- */
-.top{text-align:center;margin:2px 0 14px;max-width:520px}
-.top h1{font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800}
-.top h1 span{color:var(--gold)}
-.top p{margin:6px 0 0;font-size:.74rem;line-height:1.5;color:#9aa2b0;letter-spacing:.03em}
+/* ---------- menú de selección (mismo lenguaje visual que las fichas) ---------- */
+.menu{width:min(420px,96vw);display:flex;flex-direction:column}
+.menu.hide{display:none}
+.panel{
+  position:relative;border-radius:16px;overflow:hidden;color:var(--ink);
+  background:linear-gradient(155deg,#fbf3e0 0%,var(--paper) 38%,var(--paper-2) 100%);
+  box-shadow:0 14px 30px rgba(0,0,0,.55), 0 0 0 3px var(--accent,#1f5f8b), 0 0 0 6px rgba(0,0,0,.55);
+  padding:0 0 14px;
+}
+.phead{
+  background:linear-gradient(180deg,var(--accent,#1f5f8b),var(--accent2,#2d84bd));
+  color:#fff;padding:10px 13px 9px;box-shadow:0 2px 0 rgba(0,0,0,.25);
+}
+.phead h1{font-size:1rem;font-weight:800;letter-spacing:.01em;text-shadow:0 1px 1px rgba(0,0,0,.3)}
+.phead p{margin:3px 0 0;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;opacity:.93}
 
-/* ---------- iPod ---------- */
-.ipod{
-  width:min(330px,94vw);
-  background:linear-gradient(160deg,#fdfdfb 0%,#e9e9e4 42%,#cfcfc9 100%);
-  border-radius:30px;
-  padding:16px 16px 22px;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.9) inset,
-    0 -2px 6px rgba(0,0,0,.10) inset,
-    0 18px 40px rgba(0,0,0,.55),
-    0 2px 0 rgba(0,0,0,.4);
-  position:relative;
+.dials{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:13px 12px 0}
+.dial{display:flex;flex-direction:column}
+.dial h3{
+  font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;
+  color:#6a5734;text-align:center;margin-bottom:5px;
 }
-.ipod::after{content:"";position:absolute;inset:5px;border-radius:25px;border:1px solid rgba(255,255,255,.55);pointer-events:none}
-
-/* pantalla LCD */
-.screen{
-  background:linear-gradient(180deg,#cfe0ec 0%,#aec7d9 100%);
-  border-radius:6px;
-  border:3px solid #2b2b2b;
-  box-shadow:0 0 0 2px #b9b9b3, 0 3px 8px rgba(0,0,0,.35) inset;
-  color:#132330;
-  padding:0 0 8px;
-  overflow:hidden;
-  font-family:"Lucida Console",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-}
-.lcd-bar{
-  display:flex;justify-content:space-between;align-items:center;
-  background:linear-gradient(180deg,#7f9db1,#5f7f95);
-  color:#f2f7fb;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
-  padding:4px 7px;font-weight:700;
-}
-.lcd-title{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
-  padding:7px 8px 4px;color:#0f2231;border-bottom:1px dashed rgba(19,35,48,.35);margin:0 6px}
-.lcd-list{list-style:none;margin:0;padding:5px 6px 2px;min-height:132px}
-.lcd-list li{
-  display:flex;align-items:center;gap:6px;
-  padding:5px 7px;border-radius:3px;font-size:.76rem;line-height:1.15;
-  color:#12242f;
-}
-.lcd-list li .arw{opacity:0;font-weight:700}
-.lcd-list li.on{
-  background:linear-gradient(180deg,#3f6f92,#28516e);
-  color:#eaf3f9;box-shadow:0 1px 0 rgba(255,255,255,.25) inset;
-}
-.lcd-list li.on .arw{opacity:1}
-.lcd-list li small{display:block;font-size:.6rem;opacity:.75;letter-spacing:.02em}
-.lcd-foot{
-  margin:2px 8px 0;padding-top:5px;border-top:1px dashed rgba(19,35,48,.35);
-  font-size:.58rem;letter-spacing:.04em;color:#1a394f;
-  display:flex;justify-content:space-between;gap:6px;
-}
-.lcd-foot b{font-weight:700}
-
-/* rueda click wheel */
-.wheelwrap{display:flex;justify-content:center;margin-top:20px}
-.wheel{
-  --d:min(212px,62vw);
-  width:var(--d);height:var(--d);border-radius:50%;
+.drum{
+  position:relative;height:106px;perspective:460px;overflow:hidden;
+  touch-action:none;cursor:ns-resize;
+  border:2px solid rgba(60,45,20,.55);border-radius:10px;
   background:
-    radial-gradient(circle at 50% 30%, #ffffff 0%, #f0f0ec 38%, #dcdcd6 70%, #c6c6c0 100%);
-  box-shadow:
-    0 2px 3px rgba(0,0,0,.25),
-    0 1px 0 rgba(255,255,255,.9) inset,
-    0 -6px 14px rgba(0,0,0,.10) inset;
-  position:relative;display:flex;align-items:center;justify-content:center;
-  touch-action:none;user-select:none;
+    repeating-linear-gradient(90deg, rgba(120,90,40,.12) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg,#cbb891 0%,#fdf6e6 46%,#fdf6e6 54%,#cbb891 100%);
+  box-shadow:inset 0 3px 7px rgba(70,50,15,.4), inset 0 -3px 7px rgba(70,50,15,.4);
 }
-.wlab{position:absolute;font-size:.58rem;font-weight:800;letter-spacing:.16em;color:#8b8b85;text-transform:uppercase}
-.wlab.menu{top:10%}
-.wlab.prev{left:9%;font-size:.72rem;letter-spacing:0}
-.wlab.next{right:9%;font-size:.72rem;letter-spacing:0}
-.wlab.play{bottom:10%;font-size:.72rem;letter-spacing:0}
-.center{
-  width:38%;height:38%;border-radius:50%;
-  background:radial-gradient(circle at 50% 32%, #fbfbf9, #e4e4de 60%, #cdcdc7 100%);
-  box-shadow:0 0 0 1px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.28) inset, 0 1px 0 rgba(255,255,255,.8);
+.drum.act{border-color:var(--accent,#1f5f8b)}
+.drum:focus{outline:none}
+.drum:focus-visible{outline:3px solid var(--accent,#1f5f8b);outline-offset:2px}
+.win{
+  position:absolute;left:3px;right:3px;top:50%;height:34px;margin-top:-17px;pointer-events:none;
+  border-top:2px solid rgba(60,45,20,.65);border-bottom:2px solid rgba(60,45,20,.65);
+  background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0));
+}
+.slots{position:absolute;inset:0;transform-style:preserve-3d}
+.slot{
+  position:absolute;left:0;right:0;top:50%;height:34px;margin-top:-17px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
-  color:#5a5a54;font-size:.56rem;font-weight:800;letter-spacing:.06em;text-align:center;line-height:1.05;
+  transition:transform .3s cubic-bezier(.2,.7,.3,1),opacity .3s;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
 }
-.center b{font-size:.6rem;letter-spacing:.04em;color:#3d3d38}
-.wheel.spin .center{transform:scale(.97)}
+.slot b{font-size:.72rem;font-weight:800;line-height:1.05;text-align:center;color:#3a2d18}
+.slot small{font-size:.5rem;letter-spacing:.03em;opacity:.72;text-align:center;line-height:1.05}
+.slot.on b{color:#1d1710}
 
-.hint{margin:14px 2px 0;text-align:center;font-size:.65rem;color:#8b93a1;letter-spacing:.04em;line-height:1.6}
-.hint kbd{background:#262b34;border:1px solid #3a414d;border-radius:4px;padding:1px 5px;font-size:.62rem}
+.summary{
+  margin:13px 12px 0;padding:8px 2px;display:flex;align-items:baseline;gap:9px;
+  border-top:2px solid rgba(60,45,20,.5);border-bottom:2px solid rgba(60,45,20,.5);
+}
+.summary .s1{flex:1;font-size:.72rem;font-weight:800;line-height:1.35;color:#2a2117}
+.summary .s2{font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:#6a5734;white-space:nowrap}
+.go{
+  display:block;width:calc(100% - 24px);margin:13px 12px 0;padding:12px 10px;border-radius:10px;
+  background:linear-gradient(180deg,var(--accent,#1f5f8b),var(--accent2,#2d84bd));
+  color:#fff;font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  box-shadow:0 3px 0 rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.3) inset;
+}
+.go:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.4)}
+.tip{margin:10px 14px 0;font-size:.58rem;line-height:1.6;color:#6a5734;text-align:center}
+.tip kbd{
+  background:rgba(60,45,20,.12);border:1px solid rgba(60,45,20,.4);border-radius:4px;
+  padding:0 4px;font-size:.56rem;font-family:inherit;
+}
 
 /* ---------- vista de fichas ---------- */
 .deck{width:min(420px,96vw);display:none;flex-direction:column;align-items:center}
 .deck.show{display:flex}
-.ipodwrap{display:flex;flex-direction:column;align-items:center}
-.ipodwrap.hide{display:none}
 
 .deckbar{
   width:100%;display:flex;align-items:center;gap:8px;margin-bottom:10px;
@@ -159,20 +134,20 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 }
 .face.back{transform:rotateY(180deg)}
 /* textura de papel */
-.face::before{
+.paper::before{
   content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
   background-size:220px 220px;
 }
 /* fibras y sombreado del papel */
-.face::after{
+.paper::after{
   content:"";position:absolute;inset:0;pointer-events:none;
   background:
     radial-gradient(90% 60% at 50% 0%, rgba(255,255,255,.55), transparent 60%),
     radial-gradient(120% 90% at 100% 110%, rgba(90,60,20,.20), transparent 55%),
     repeating-linear-gradient(93deg, rgba(120,90,40,.045) 0 2px, transparent 2px 7px);
 }
-.face>*{position:relative;z-index:2}
+.paper>*{position:relative;z-index:2}
 
 .chead{
   background:linear-gradient(180deg,var(--accent,#1f5f8b),var(--accent2,#2d84bd));
@@ -266,33 +241,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 </head>
 <body>
 
-<div class="top">
-  <h1>Fichas <span>FAT &amp; SAT</span></h1>
-  <p>Cables aislados · Terminales y empalmes · Descargadores de sobretensión<br>Consulta rápida basada en normas IEC</p>
-</div>
-
-<div class="ipodwrap" id="ipodwrap">
-  <div class="ipod">
-    <div class="screen">
-      <div class="lcd-bar"><span id="lcdStep">Paso 1 de 3</span><span>◈ IEC</span></div>
-      <div class="lcd-title" id="lcdTitle">Equipo</div>
-      <ul class="lcd-list" id="lcdList"></ul>
-      <div class="lcd-foot">
-        <span id="lcdSel">—</span>
-        <span><b id="lcdCount">0</b> fichas</span>
-      </div>
+<div class="menu" id="menu">
+  <div class="panel paper" id="panel">
+    <div class="phead">
+      <h1>Fichas FAT &amp; SAT</h1>
+      <p>Cables · terminales · descargadores — IEC</p>
     </div>
-    <div class="wheelwrap">
-      <div class="wheel" id="wheel">
-        <span class="wlab menu">Menu</span>
-        <span class="wlab prev">◀◀</span>
-        <span class="wlab next">▶▶</span>
-        <span class="wlab play">▶❙❙</span>
-        <button class="center" id="okBtn"><b id="okLabel">OK</b><span id="okSub">seleccionar</span></button>
-      </div>
-    </div>
+    <div class="dials" id="dials"></div>
+    <div class="summary"><span class="s1" id="sum">—</span><span class="s2"><b id="cnt">0</b> fichas</span></div>
+    <button class="go" id="goBtn">Consultar</button>
+    <p class="tip">Gira cada rodillo con el dedo o toca sus extremos<br><kbd>←</kbd><kbd>→</kbd> cambian de rodillo · <kbd>↑</kbd><kbd>↓</kbd> de valor · <kbd>Enter</kbd> consulta</p>
   </div>
-  <p class="hint">Gira la rueda con el dedo (o usa <kbd>↑</kbd><kbd>↓</kbd>) · <b>MENÚ</b> vuelve atrás<br>El botón central confirma y, en el último paso, <b>CONSULTA</b> las fichas</p>
 </div>
 
 <div class="deck" id="deck">
@@ -611,18 +570,18 @@ const DIAG={
    MENÚ
    ============================================================ */
 const EQUIPOS=[
- {id:'cable',n:'Cable aislado',s:'Aislamiento seco XLPE / EPR'},
- {id:'acc',  n:'Terminales y empalmes',s:'Accesorios del sistema de cable'},
- {id:'da',   n:'Descargadores',s:'Pararrayos de óxido metálico (ZnO)'}
+ {id:'cable',n:'Cable aislado',        k:'Cable',      t:'XLPE / EPR'},
+ {id:'acc',  n:'Terminales y empalmes',k:'Terminales', t:'y empalmes'},
+ {id:'da',   n:'Descargadores',        k:'Descargador',t:'pararrayos ZnO'}
 ];
 const NIVELES=[
- {id:'MT', n:'Media tensión',      s:'6 – 36 kV · ej. 12/20 (24) kV'},
- {id:'AT', n:'Alta tensión',       s:'45 – 150 kV · ej. 76/132 (145) kV'},
- {id:'EAT',n:'Extra alta tensión', s:'> 170 kV · ej. 190/330 (362) kV'}
+ {id:'MT', n:'Media tensión',      s:'6 – 36 kV · ej. 12/20 (24) kV',    k:'MT', t:'6 – 36 kV'},
+ {id:'AT', n:'Alta tensión',       s:'45 – 150 kV · ej. 76/132 (145) kV',k:'AT', t:'45 – 150 kV'},
+ {id:'EAT',n:'Extra alta tensión', s:'> 170 kV · ej. 190/330 (362) kV',  k:'EAT',t:'> 170 kV'}
 ];
 const PRUEBAS=[
- {id:'FAT',n:'FAT · en fábrica',s:'Rutina, muestra y aceptación'},
- {id:'SAT',n:'SAT · en sitio',  s:'Después de la instalación'}
+ {id:'FAT',n:'FAT · en fábrica',k:'FAT',t:'en fábrica'},
+ {id:'SAT',n:'SAT · en sitio',  k:'SAT',t:'en sitio'}
 ];
 
 /* ============================================================
@@ -913,9 +872,9 @@ function daFAT(l){const d=P.da[l];return [
 function daSAT(l){const d=P.da[l];return [
  {code:'S-1',t:'Inspección visual y resistencia de aislamiento',norm:'IEC 60099-5 · guía de aplicación',diag:'megger',diagOpts:{v:d.mg},
   cap:'Megóhmetro entre borne superior y base, con el descargador desconectado y limpio.',
-  stats:[['Tensión de prueba',d.mg],['R de aislamiento','≥ '+d.ri],['Duración','1 min'],['Estado externo','sin fisuras ni tracking']],
+  stats:[['Tensión de prueba',d.mg],['R de aislamiento',d.ri],['Duración','1 min'],['Estado externo','sin fisuras ni tracking']],
   medir:['R de aislamiento borne–base de cada unidad','Estado de porcelana/silicona, juntas y bridas','Limpieza y contaminación superficial','Verificación de la distancia de fuga instalada'],
-  esperar:['R de aislamiento ≥ '+d.ri+' y equilibrada entre fases','Sin fisuras, erosión ni marcas de tracking','Distancia de fuga adecuada al nivel de contaminación del emplazamiento'],
+  esperar:['R de aislamiento '+d.ri+' y equilibrada entre fases','Sin fisuras, erosión ni marcas de tracking','Distancia de fuga adecuada al nivel de contaminación del emplazamiento'],
   mnemo:'«Mira antes de medir»: la mitad de los descargadores defectuosos se detectan a simple vista.',
   pasos:['Desconectar el descargador del sistema y del contador; descargarlo.','Limpiar la superficie externa en seco.','Aplicar '+d.mg+' durante 1 min entre borne y base.','Comparar entre fases y con el histórico.','Descargar y restituir todas las conexiones.'],
   warn:'Una R de aislamiento baja puede deberse solo a humedad superficial: limpia y repite antes de condenar la unidad.'},
@@ -965,11 +924,11 @@ const CARDS={};
 });
 
 /* ============================================================
-   LÓGICA DEL MENÚ (rueda tipo click wheel)
+   MENÚ: tres rodillos giratorios dispuestos en horizontal
    ============================================================ */
 const LISTS=[EQUIPOS,NIVELES,PRUEBAS];
-const TITLES=['Equipo','Nivel de tensión','Tipo de prueba'];
-const st={step:0,idx:[0,0,0]};
+const TITLES=['Equipo','Tensión','Prueba'];
+const st={idx:[0,0,0],dial:0};
 const $=id=>document.getElementById(id);
 
 function keyOf(){return EQUIPOS[st.idx[0]].id+'|'+NIVELES[st.idx[1]].id+'|'+PRUEBAS[st.idx[2]].id;}
@@ -980,79 +939,78 @@ function click(){
     actx=actx||new (window.AudioContext||window.webkitAudioContext)();
     const o=actx.createOscillator(),g=actx.createGain();
     o.type='square';o.frequency.value=1750;
-    g.gain.setValueAtTime(.035,actx.currentTime);
+    g.gain.setValueAtTime(.03,actx.currentTime);
     g.gain.exponentialRampToValueAtTime(.0005,actx.currentTime+.03);
     o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+.035);
   }catch(e){}
 }
 
-function renderMenu(){
-  const list=LISTS[st.step],i=st.idx[st.step];
-  $('lcdStep').textContent='Paso '+(st.step+1)+' de 3';
-  $('lcdTitle').textContent=TITLES[st.step];
-  $('lcdList').innerHTML=list.map((o,k)=>
-    '<li class="'+(k===i?'on':'')+'"><span class="arw">▸</span><span>'+o.n+'<small>'+o.s+'</small></span></li>').join('');
-  const sel=[EQUIPOS[st.idx[0]].n,NIVELES[st.idx[1]].id,PRUEBAS[st.idx[2]].id];
-  $('lcdSel').textContent=sel.slice(0,st.step+1).join(' › ');
-  $('lcdCount').textContent=(CARDS[keyOf()]||[]).length;
-  $('okLabel').textContent=st.step===2?'CONSULTAR':'OK';
-  $('okSub').textContent=st.step===2?'ver fichas':'siguiente';
-}
-function move(d){
-  const list=LISTS[st.step];
-  st.idx[st.step]=(st.idx[st.step]+d+list.length)%list.length;
-  click();renderMenu();
-}
-function forward(){
-  if(st.step<2){st.step++;click();renderMenu();}
-  else{click();openDeck();}
-}
-function back(){
-  if(!$('deck').classList.contains('show')){
-    if(st.step>0){st.step--;click();renderMenu();}
-  } else closeDeck();
+function buildDials(){
+  $('dials').innerHTML=LISTS.map((list,d)=>
+    '<div class="dial"><h3>'+TITLES[d]+'</h3>'+
+    '<div class="drum" data-d="'+d+'" tabindex="0" role="listbox" aria-label="'+TITLES[d]+'">'+
+      '<div class="slots">'+list.map(o=>'<div class="slot"><b>'+o.k+'</b><small>'+o.t+'</small></div>').join('')+'</div>'+
+      '<div class="win"></div>'+
+    '</div></div>').join('');
+  document.querySelectorAll('.drum').forEach(attachDrum);
 }
 
-/* --- gestos sobre la rueda --- */
-const wheel=$('wheel');
-let drag=null;
-function ang(e,r){return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI;}
-wheel.addEventListener('pointerdown',e=>{
-  const r=wheel.getBoundingClientRect();
-  drag={r,last:ang(e,r),acc:0,total:0,x:e.clientX,y:e.clientY};
-  wheel.setPointerCapture(e.pointerId);wheel.classList.add('spin');
-});
-wheel.addEventListener('pointermove',e=>{
-  if(!drag)return;
-  let a=ang(e,drag.r),d=a-drag.last;
-  if(d>180)d-=360; if(d<-180)d+=360;
-  drag.last=a;drag.acc+=d;drag.total+=Math.abs(d);
-  while(Math.abs(drag.acc)>=26){const s=drag.acc>0?1:-1;drag.acc-=26*s;move(s);}
-});
-let handled=0;                         /* evita que el clic repita la acción del pointerup */
-function endDrag(e){
-  if(!drag)return;
-  wheel.classList.remove('spin');
-  const moved=Math.hypot((e.clientX||0)-drag.x,(e.clientY||0)-drag.y);
-  if(drag.total<10&&moved<12){
-    const cx=drag.r.left+drag.r.width/2, cy=drag.r.top+drag.r.height/2;
-    const rad=Math.hypot(e.clientX-cx,e.clientY-cy);
-    handled=Date.now();
-    if(rad<=drag.r.width*0.21) forward();     /* botón central */
-    else{
-      let a=ang(e,drag.r);
-      if(a>-135&&a<=-45) back();              /* MENÚ */
-      else if(a>-45&&a<=45) move(1);          /* ▶▶ */
-      else if(a>45&&a<=135) forward();        /* ▶❙❙ */
-      else move(-1);                          /* ◀◀ */
-    }
-  }
-  try{wheel.releasePointerCapture(e.pointerId);}catch(err){}
-  drag=null;
+function renderMenu(){
+  document.querySelectorAll('.drum').forEach((drum,d)=>{
+    const i=st.idx[d];
+    drum.classList.toggle('act',d===st.dial);
+    const n=LISTS[d].length;
+    drum.querySelectorAll('.slot').forEach((el,k)=>{
+      let off=k-i;                       /* el tambor es continuo: el último asoma por arriba */
+      if(off>n/2)off-=n; else if(off<-n/2)off+=n;
+      el.style.transform='rotateX('+(-off*45)+'deg) translateZ(42px)';
+      el.style.opacity=Math.abs(off)>1?'0':(off?'.4':'1');
+      el.classList.toggle('on',off===0);
+    });
+  });
+  const e=EQUIPOS[st.idx[0]],n=NIVELES[st.idx[1]],pr=PRUEBAS[st.idx[2]];
+  $('sum').textContent=e.n+' · '+n.n+' · '+pr.n;
+  $('cnt').textContent=(CARDS[keyOf()]||[]).length;
+  const fat=pr.id==='FAT';
+  $('panel').style.setProperty('--accent', fat?'#1f5f8b':'#a8541c');
+  $('panel').style.setProperty('--accent2',fat?'#2d84bd':'#d47a2b');
 }
-wheel.addEventListener('pointerup',endDrag);
-wheel.addEventListener('pointercancel',()=>{drag=null;wheel.classList.remove('spin');});
-$('okBtn').addEventListener('click',e=>{e.stopPropagation();if(Date.now()-handled<500)return;forward();});
+
+function move(d,delta){
+  const l=LISTS[d].length;
+  st.idx[d]=(st.idx[d]+delta+l)%l;
+  st.dial=d;click();renderMenu();
+}
+
+function attachDrum(el){
+  const d=+el.dataset.d;
+  let dr=null;
+  el.addEventListener('pointerdown',e=>{
+    dr={y:e.clientY,acc:0,moved:0};
+    try{el.setPointerCapture(e.pointerId);}catch(x){}
+    st.dial=d;renderMenu();
+  });
+  el.addEventListener('pointermove',e=>{
+    if(!dr)return;
+    const dy=e.clientY-dr.y;dr.y=e.clientY;dr.acc+=dy;dr.moved+=Math.abs(dy);
+    while(Math.abs(dr.acc)>=24){const s=dr.acc>0?1:-1;dr.acc-=24*s;move(d,-s);}
+  });
+  const end=e=>{
+    if(!dr)return;
+    if(dr.moved<8){                       /* toque simple: arriba sube, abajo baja */
+      const r=el.getBoundingClientRect();
+      move(d,(e.clientY-r.top)<r.height/2?-1:1);
+    }
+    try{el.releasePointerCapture(e.pointerId);}catch(x){}
+    dr=null;
+  };
+  el.addEventListener('pointerup',end);
+  el.addEventListener('pointercancel',()=>{dr=null;});
+  el.addEventListener('wheel',e=>{e.preventDefault();move(d,e.deltaY>0?1:-1);},{passive:false});
+  el.addEventListener('focus',()=>{st.dial=d;renderMenu();});
+}
+
+$('goBtn').addEventListener('click',()=>{click();openDeck();});
 
 /* ============================================================
    FICHAS
@@ -1061,7 +1019,7 @@ let deck=[],pos=0;
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 
 function faceFront(c,tipo){
-  return '<div class="face front">'+
+  return '<div class="face front paper">'+
    '<div class="chead"><div class="badge">'+tipo+'<b>'+c.code+'</b></div>'+
    '<div><h2>'+esc(c.t)+'</h2><span class="norm">'+esc(c.norm)+'</span></div></div>'+
    '<div class="fig">'+(DIAG[c.diag]?DIAG[c.diag](c.diagOpts||{}):'')+'</div>'+
@@ -1073,7 +1031,7 @@ function faceFront(c,tipo){
   '</div>';
 }
 function faceBack(c,tipo){
-  return '<div class="face back">'+
+  return '<div class="face back paper">'+
    '<div class="chead"><div class="badge">PASOS<b>'+c.pasos.length+'</b></div>'+
    '<div><h2>Procedimiento</h2><span class="norm">'+esc(c.t)+'</span></div></div>'+
    '<ol class="steps">'+c.pasos.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>'+
@@ -1112,11 +1070,11 @@ function openDeck(){
   if(!deck.length)return;
   $('crumbMain').textContent=EQUIPOS[st.idx[0]].n+' · '+NIVELES[st.idx[1]].id;
   $('crumbSub').textContent=PRUEBAS[st.idx[2]].n+' · '+NIVELES[st.idx[1]].s;
-  $('ipodwrap').classList.add('hide');$('deck').classList.add('show');
+  $('menu').classList.add('hide');$('deck').classList.add('show');
   renderCard();
 }
 function closeDeck(){
-  $('deck').classList.remove('show');$('ipodwrap').classList.remove('hide');
+  $('deck').classList.remove('show');$('menu').classList.remove('hide');
   click();window.scrollTo({top:0,behavior:'smooth'});
 }
 $('backBtn').addEventListener('click',closeDeck);
@@ -1143,13 +1101,15 @@ document.addEventListener('keydown',e=>{
     if(e.key===' '||e.key==='Enter'){$('card').classList.toggle('flip');fit();e.preventDefault();}
     if(e.key==='Escape'||e.key==='Backspace'){closeDeck();e.preventDefault();}
   }else{
-    if(e.key==='ArrowDown'){move(1);e.preventDefault();}
-    if(e.key==='ArrowUp'){move(-1);e.preventDefault();}
-    if(e.key==='Enter'||e.key==='ArrowRight'){forward();e.preventDefault();}
-    if(e.key==='Escape'||e.key==='Backspace'||e.key==='ArrowLeft'){back();e.preventDefault();}
+    if(e.key==='ArrowDown'){move(st.dial,1);e.preventDefault();}
+    if(e.key==='ArrowUp'){move(st.dial,-1);e.preventDefault();}
+    if(e.key==='ArrowRight'){st.dial=(st.dial+1)%3;renderMenu();e.preventDefault();}
+    if(e.key==='ArrowLeft'){st.dial=(st.dial+2)%3;renderMenu();e.preventDefault();}
+    if(e.key==='Enter'){click();openDeck();e.preventDefault();}
   }
 });
 
+buildDials();
 renderMenu();
 </script>
 </body>
