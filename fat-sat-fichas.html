@@ -33,7 +33,7 @@ body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   min-height:100vh;            /* iOS antiguo */
   min-height:100dvh;
-  padding:calc(14px + env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+  padding:14px max(12px, env(safe-area-inset-right))
           calc(28px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   display:flex;flex-direction:column;align-items:center;
   overflow-x:hidden;
@@ -45,6 +45,17 @@ button{
   -webkit-appearance:none;appearance:none;
   -webkit-user-select:none;user-select:none;
 }
+
+/* ---------- aviso cuando el visor no ejecuta JavaScript ---------- */
+.aviso{
+  width:min(420px,96vw);margin:0 0 14px;padding:14px 15px;border-radius:14px;
+  background:linear-gradient(155deg,#fbf3e0 0%,var(--paper) 40%,var(--paper-2) 100%);
+  color:var(--ink);box-shadow:0 10px 24px rgba(0,0,0,.5),0 0 0 3px #a8541c,0 0 0 6px rgba(0,0,0,.55);
+}
+.aviso>b{display:block;font-size:.9rem;letter-spacing:.02em;margin-bottom:7px;color:#7a2d0c}
+.aviso p{margin:7px 0 0;font-size:.76rem;line-height:1.5}
+.aviso .det{margin-top:9px;padding-top:8px;border-top:1px dashed rgba(60,45,20,.5);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.66rem;color:#7a2d0c;word-break:break-word}
 
 /* ---------- menú de selección (mismo lenguaje visual que las fichas) ---------- */
 .menu{width:min(420px,96vw);display:flex;flex-direction:column}
@@ -263,6 +274,9 @@ button{
 @media (min-width:760px){
   .deck{width:440px}
 }
+@media (display-mode:standalone){
+  body{padding-top:calc(14px + env(safe-area-inset-top))}
+}
 @media (max-height:660px){        /* móviles cortos: el panel cabe sin desplazar */
   .drum{height:96px}
   .dials{gap:8px}
@@ -275,6 +289,27 @@ button{
 </style>
 </head>
 <body>
+
+<div class="aviso" id="aviso" hidden>
+  <b>Esta ficha necesita JavaScript</b>
+  <p>Estás viéndola en una <b>vista previa</b> (Archivos, correo o mensajería) y ahí el JavaScript está desactivado, por eso el menú sale vacío y <b>Consultar</b> no responde.</p>
+  <p><b>iPhone / iPad:</b> pulsa <b>Compartir</b> ⬆︎ y elige <b>Abrir en Safari</b> (o Chrome).<br>
+     <b>Android:</b> abre el archivo desde <b>Chrome</b> (Descargas › abrir con Chrome).</p>
+  <p id="avisoDet" class="det" hidden></p>
+</div>
+<noscript><style>#aviso{display:block !important}</style></noscript>
+<script>
+(function(){
+  var av=document.getElementById('aviso'),det=document.getElementById('avisoDet');
+  function mostrar(msg){
+    if(!av)return;
+    av.hidden=false;
+    if(msg&&det){det.hidden=false;det.textContent=msg;}
+  }
+  window.addEventListener('error',function(e){mostrar('Detalle técnico: '+((e&&e.message)||'error desconocido'));});
+  setTimeout(function(){if(!window.__fichasOK)mostrar('');},1500);
+})();
+</script>
 
 <div class="menu" id="menu">
   <div class="panel paper" id="panel">
@@ -1175,6 +1210,7 @@ document.addEventListener('keydown',e=>{
 
 buildDials();
 renderMenu();
+window.__fichasOK=true;
 </script>
 </body>
 </html>
