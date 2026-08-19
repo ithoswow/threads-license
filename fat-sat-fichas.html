@@ -48,14 +48,14 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .phead h1{font-size:1rem;font-weight:800;letter-spacing:.01em;text-shadow:0 1px 1px rgba(0,0,0,.3)}
 .phead p{margin:3px 0 0;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;opacity:.93}
 
-.dials{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:13px 12px 0}
+.dials{display:flex;flex-direction:column;gap:12px;margin:13px 12px 0}
 .dial{display:flex;flex-direction:column}
 .dial h3{
-  font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;
-  color:#6a5734;text-align:center;margin-bottom:5px;
+  font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;
+  color:#6a5734;margin:0 0 5px 2px;
 }
 .drum{
-  position:relative;height:106px;perspective:460px;overflow:hidden;
+  position:relative;height:112px;perspective:600px;overflow:hidden;
   touch-action:none;cursor:ns-resize;
   border:2px solid rgba(60,45,20,.55);border-radius:10px;
   background:
@@ -67,19 +67,19 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .drum:focus{outline:none}
 .drum:focus-visible{outline:3px solid var(--accent,#1f5f8b);outline-offset:2px}
 .win{
-  position:absolute;left:3px;right:3px;top:50%;height:34px;margin-top:-17px;pointer-events:none;
+  position:absolute;left:3px;right:3px;top:50%;height:36px;margin-top:-18px;pointer-events:none;
   border-top:2px solid rgba(60,45,20,.65);border-bottom:2px solid rgba(60,45,20,.65);
   background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0));
 }
 .slots{position:absolute;inset:0;transform-style:preserve-3d}
 .slot{
-  position:absolute;left:0;right:0;top:50%;height:34px;margin-top:-17px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  position:absolute;left:0;right:0;top:50%;height:36px;margin-top:-18px;
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 14px;
   transition:transform .3s cubic-bezier(.2,.7,.3,1),opacity .3s;
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
 }
-.slot b{font-size:.72rem;font-weight:800;line-height:1.05;text-align:center;color:#3a2d18}
-.slot small{font-size:.5rem;letter-spacing:.03em;opacity:.72;text-align:center;line-height:1.05}
+.slot b{flex:1;min-width:0;font-size:.92rem;font-weight:800;line-height:1.1;color:#3a2d18;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slot small{flex:0 0 auto;font-size:.62rem;letter-spacing:.02em;opacity:.72;text-align:right;white-space:nowrap}
 .slot.on b{color:#1d1710}
 
 .summary{
@@ -133,6 +133,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   padding:0 0 12px;
 }
 .face.back{transform:rotateY(180deg)}
+/* solo la cara visible recibe pulsaciones (la oculta se despinta, pero seguía capturándolas) */
+.face.back{pointer-events:none}
+.card.flip .face.front{pointer-events:none}
+.card.flip .face.back{pointer-events:auto}
 /* textura de papel */
 .paper::before{
   content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
@@ -233,6 +237,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 @media (max-width:360px){
   .chead h2{font-size:.88rem}
   .stat{font-size:.7rem}
+  .slot b{font-size:.84rem}
+  .slot small{font-size:.56rem}
+  .phead h1{font-size:.92rem}
 }
 @media (min-width:760px){
   .deck{width:440px}
@@ -570,18 +577,18 @@ const DIAG={
    MENÚ
    ============================================================ */
 const EQUIPOS=[
- {id:'cable',n:'Cable aislado',        k:'Cable',      t:'XLPE / EPR'},
- {id:'acc',  n:'Terminales y empalmes',k:'Terminales', t:'y empalmes'},
- {id:'da',   n:'Descargadores',        k:'Descargador',t:'pararrayos ZnO'}
+ {id:'cable',n:'Cable aislado',        t:'XLPE / EPR'},
+ {id:'acc',  n:'Terminales y empalmes',t:'accesorios'},
+ {id:'da',   n:'Descargadores',        t:'pararrayos ZnO'}
 ];
 const NIVELES=[
- {id:'MT', n:'Media tensión',      s:'6 – 36 kV · ej. 12/20 (24) kV',    k:'MT', t:'6 – 36 kV'},
- {id:'AT', n:'Alta tensión',       s:'45 – 150 kV · ej. 76/132 (145) kV',k:'AT', t:'45 – 150 kV'},
- {id:'EAT',n:'Extra alta tensión', s:'> 170 kV · ej. 190/330 (362) kV',  k:'EAT',t:'> 170 kV'}
+ {id:'MT', n:'Media tensión',      t:'6 – 36 kV',   s:'6 – 36 kV · ej. 12/20 (24) kV'},
+ {id:'AT', n:'Alta tensión',       t:'45 – 150 kV', s:'45 – 150 kV · ej. 76/132 (145) kV'},
+ {id:'EAT',n:'Extra alta tensión', t:'> 170 kV',    s:'> 170 kV · ej. 190/330 (362) kV'}
 ];
 const PRUEBAS=[
- {id:'FAT',n:'FAT · en fábrica',k:'FAT',t:'en fábrica'},
- {id:'SAT',n:'SAT · en sitio',  k:'SAT',t:'en sitio'}
+ {id:'FAT',n:'FAT · en fábrica',t:'rutina y aceptación'},
+ {id:'SAT',n:'SAT · en sitio',  t:'tras la instalación'}
 ];
 
 /* ============================================================
@@ -949,7 +956,7 @@ function buildDials(){
   $('dials').innerHTML=LISTS.map((list,d)=>
     '<div class="dial"><h3>'+TITLES[d]+'</h3>'+
     '<div class="drum" data-d="'+d+'" tabindex="0" role="listbox" aria-label="'+TITLES[d]+'">'+
-      '<div class="slots">'+list.map(o=>'<div class="slot"><b>'+o.k+'</b><small>'+o.t+'</small></div>').join('')+'</div>'+
+      '<div class="slots">'+list.map(o=>'<div class="slot"><b>'+o.n+'</b><small>'+o.t+'</small></div>').join('')+'</div>'+
       '<div class="win"></div>'+
     '</div></div>').join('');
   document.querySelectorAll('.drum').forEach(attachDrum);
@@ -963,17 +970,23 @@ function renderMenu(){
     drum.querySelectorAll('.slot').forEach((el,k)=>{
       let off=k-i;                       /* el tambor es continuo: el último asoma por arriba */
       if(off>n/2)off-=n; else if(off<-n/2)off+=n;
-      el.style.transform='rotateX('+(-off*45)+'deg) translateZ(42px)';
-      el.style.opacity=Math.abs(off)>1?'0':(off?'.4':'1');
+      el.style.transform='rotateX('+(-off*45)+'deg) translateZ(44px) scale(.92)';
+      el.style.opacity=Math.abs(off)>1?'0':(off?'.33':'1');
       el.classList.toggle('on',off===0);
     });
   });
   const e=EQUIPOS[st.idx[0]],n=NIVELES[st.idx[1]],pr=PRUEBAS[st.idx[2]];
-  $('sum').textContent=e.n+' · '+n.n+' · '+pr.n;
+  $('sum').textContent='Norma base · '+normaDe(e.id,n.id);
   $('cnt').textContent=(CARDS[keyOf()]||[]).length;
   const fat=pr.id==='FAT';
   $('panel').style.setProperty('--accent', fat?'#1f5f8b':'#a8541c');
   $('panel').style.setProperty('--accent2',fat?'#2d84bd':'#d47a2b');
+}
+
+function normaDe(eq,lvl){
+  if(eq==='cable')return P.cable[lvl].std;
+  if(eq==='acc')  return ACCSTD[lvl];
+  return 'IEC 60099-4 / IEC 60099-5';
 }
 
 function move(d,delta){
@@ -993,7 +1006,7 @@ function attachDrum(el){
   el.addEventListener('pointermove',e=>{
     if(!dr)return;
     const dy=e.clientY-dr.y;dr.y=e.clientY;dr.acc+=dy;dr.moved+=Math.abs(dy);
-    while(Math.abs(dr.acc)>=24){const s=dr.acc>0?1:-1;dr.acc-=24*s;move(d,-s);}
+    while(Math.abs(dr.acc)>=28){const s=dr.acc>0?1:-1;dr.acc-=28*s;move(d,-s);}
   });
   const end=e=>{
     if(!dr)return;
