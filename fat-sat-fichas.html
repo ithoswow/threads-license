@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#15171c">
+<title>Fichas FAT &amp; SAT · Cables, Terminales y Descargadores AT (IEC)</title>
+<style>
+:root{
+  --ink:#221c14;
+  --paper:#f2e7cf;
+  --paper-2:#e6d8ba;
+  --fat:#1f5f8b;      /* azul fábrica */
+  --fat-2:#2d84bd;
+  --sat:#a8541c;      /* ámbar campo */
+  --sat-2:#d47a2b;
+  --gold:#c9a227;
+  --bg:#15171c;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(120% 90% at 50% -10%, #2a2f39 0%, #15171c 55%, #0d0e12 100%);
+  color:#e9e6df;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  min-height:100dvh;
+  padding:14px 12px calc(28px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;align-items:center;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{margin:0}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+
+/* ---------- cabecera ---------- */
+.top{text-align:center;margin:2px 0 14px;max-width:520px}
+.top h1{font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800}
+.top h1 span{color:var(--gold)}
+.top p{margin:6px 0 0;font-size:.74rem;line-height:1.5;color:#9aa2b0;letter-spacing:.03em}
+
+/* ---------- iPod ---------- */
+.ipod{
+  width:min(330px,94vw);
+  background:linear-gradient(160deg,#fdfdfb 0%,#e9e9e4 42%,#cfcfc9 100%);
+  border-radius:30px;
+  padding:16px 16px 22px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 -2px 6px rgba(0,0,0,.10) inset,
+    0 18px 40px rgba(0,0,0,.55),
+    0 2px 0 rgba(0,0,0,.4);
+  position:relative;
+}
+.ipod::after{content:"";position:absolute;inset:5px;border-radius:25px;border:1px solid rgba(255,255,255,.55);pointer-events:none}
+
+/* pantalla LCD */
+.screen{
+  background:linear-gradient(180deg,#cfe0ec 0%,#aec7d9 100%);
+  border-radius:6px;
+  border:3px solid #2b2b2b;
+  box-shadow:0 0 0 2px #b9b9b3, 0 3px 8px rgba(0,0,0,.35) inset;
+  color:#132330;
+  padding:0 0 8px;
+  overflow:hidden;
+  font-family:"Lucida Console",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.lcd-bar{
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(180deg,#7f9db1,#5f7f95);
+  color:#f2f7fb;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 7px;font-weight:700;
+}
+.lcd-title{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  padding:7px 8px 4px;color:#0f2231;border-bottom:1px dashed rgba(19,35,48,.35);margin:0 6px}
+.lcd-list{list-style:none;margin:0;padding:5px 6px 2px;min-height:132px}
+.lcd-list li{
+  display:flex;align-items:center;gap:6px;
+  padding:5px 7px;border-radius:3px;font-size:.76rem;line-height:1.15;
+  color:#12242f;
+}
+.lcd-list li .arw{opacity:0;font-weight:700}
+.lcd-list li.on{
+  background:linear-gradient(180deg,#3f6f92,#28516e);
+  color:#eaf3f9;box-shadow:0 1px 0 rgba(255,255,255,.25) inset;
+}
+.lcd-list li.on .arw{opacity:1}
+.lcd-list li small{display:block;font-size:.6rem;opacity:.75;letter-spacing:.02em}
+.lcd-foot{
+  margin:2px 8px 0;padding-top:5px;border-top:1px dashed rgba(19,35,48,.35);
+  font-size:.58rem;letter-spacing:.04em;color:#1a394f;
+  display:flex;justify-content:space-between;gap:6px;
+}
+.lcd-foot b{font-weight:700}
+
+/* rueda click wheel */
+.wheelwrap{display:flex;justify-content:center;margin-top:20px}
+.wheel{
+  --d:min(212px,62vw);
+  width:var(--d);height:var(--d);border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 30%, #ffffff 0%, #f0f0ec 38%, #dcdcd6 70%, #c6c6c0 100%);
+  box-shadow:
+    0 2px 3px rgba(0,0,0,.25),
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 -6px 14px rgba(0,0,0,.10) inset;
+  position:relative;display:flex;align-items:center;justify-content:center;
+  touch-action:none;user-select:none;
+}
+.wlab{position:absolute;font-size:.58rem;font-weight:800;letter-spacing:.16em;color:#8b8b85;text-transform:uppercase}
+.wlab.menu{top:10%}
+.wlab.prev{left:9%;font-size:.72rem;letter-spacing:0}
+.wlab.next{right:9%;font-size:.72rem;letter-spacing:0}
+.wlab.play{bottom:10%;font-size:.72rem;letter-spacing:0}
+.center{
+  width:38%;height:38%;border-radius:50%;
+  background:radial-gradient(circle at 50% 32%, #fbfbf9, #e4e4de 60%, #cdcdc7 100%);
+  box-shadow:0 0 0 1px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.28) inset, 0 1px 0 rgba(255,255,255,.8);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  color:#5a5a54;font-size:.56rem;font-weight:800;letter-spacing:.06em;text-align:center;line-height:1.05;
+}
+.center b{font-size:.6rem;letter-spacing:.04em;color:#3d3d38}
+.wheel.spin .center{transform:scale(.97)}
+
+.hint{margin:14px 2px 0;text-align:center;font-size:.65rem;color:#8b93a1;letter-spacing:.04em;line-height:1.6}
+.hint kbd{background:#262b34;border:1px solid #3a414d;border-radius:4px;padding:1px 5px;font-size:.62rem}
+
+/* ---------- vista de fichas ---------- */
+.deck{width:min(420px,96vw);display:none;flex-direction:column;align-items:center}
+.deck.show{display:flex}
+.ipodwrap{display:flex;flex-direction:column;align-items:center}
+.ipodwrap.hide{display:none}
+
+.deckbar{
+  width:100%;display:flex;align-items:center;gap:8px;margin-bottom:10px;
+}
+.btn{
+  background:#232833;border:1px solid #39414f;border-radius:999px;
+  padding:8px 13px;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:#d8dde6;box-shadow:0 2px 0 rgba(0,0,0,.35);
+}
+.btn:active{transform:translateY(1px);box-shadow:none}
+.crumb{flex:1;font-size:.6rem;line-height:1.35;color:#9aa2b0;letter-spacing:.05em;text-transform:uppercase}
+.crumb b{color:#e9e6df;display:block;font-size:.68rem}
+
+/* ficha estilo carta de intercambio, textura de papel */
+.card{
+  width:100%;perspective:1400px;
+}
+.inner{display:grid;transition:transform .55s cubic-bezier(.4,.1,.2,1),height .35s ease;transform-style:preserve-3d}
+.card.flip .inner{transform:rotateY(180deg)}
+.face{
+  grid-area:1/1;align-self:start;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:16px;overflow:hidden;position:relative;
+  background:
+    linear-gradient(155deg,#fbf3e0 0%,var(--paper) 38%, var(--paper-2) 100%);
+  color:var(--ink);
+  box-shadow:0 14px 30px rgba(0,0,0,.55), 0 0 0 3px var(--accent,#1f5f8b), 0 0 0 6px rgba(0,0,0,.55);
+  padding:0 0 12px;
+}
+.face.back{transform:rotateY(180deg)}
+/* textura de papel */
+.face::before{
+  content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  background-size:220px 220px;
+}
+/* fibras y sombreado del papel */
+.face::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(90% 60% at 50% 0%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(120% 90% at 100% 110%, rgba(90,60,20,.20), transparent 55%),
+    repeating-linear-gradient(93deg, rgba(120,90,40,.045) 0 2px, transparent 2px 7px);
+}
+.face>*{position:relative;z-index:2}
+
+.chead{
+  background:linear-gradient(180deg,var(--accent,#1f5f8b),var(--accent2,#2d84bd));
+  color:#fff;padding:9px 12px 8px;display:flex;align-items:flex-start;gap:9px;
+  box-shadow:0 2px 0 rgba(0,0,0,.25);
+}
+.badge{
+  flex:0 0 auto;min-width:46px;text-align:center;background:rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.5);border-radius:7px;padding:3px 5px;
+  font-size:.55rem;font-weight:800;letter-spacing:.08em;line-height:1.25;
+}
+.badge b{display:block;font-size:.82rem;letter-spacing:.02em}
+.chead h2{font-size:.95rem;line-height:1.2;letter-spacing:.01em;font-weight:800;text-shadow:0 1px 1px rgba(0,0,0,.3)}
+.chead .norm{display:block;margin-top:3px;font-size:.6rem;letter-spacing:.09em;font-weight:700;opacity:.92;text-transform:uppercase}
+
+.fig{
+  margin:10px 12px 0;background:#fffdf6;border:1px solid rgba(60,45,20,.35);
+  border-radius:8px;padding:6px 4px 2px;box-shadow:0 2px 5px rgba(80,60,25,.18) inset;
+}
+.fig svg{display:block;width:100%;height:auto}
+.figcap{
+  margin:5px 12px 0;font-size:.58rem;line-height:1.45;letter-spacing:.02em;
+  color:#5d4c30;text-align:center;font-style:italic;
+}
+
+.stats{margin:10px 12px 0;border-top:2px solid rgba(60,45,20,.5);border-bottom:2px solid rgba(60,45,20,.5)}
+.stat{display:flex;align-items:baseline;gap:6px;padding:5px 2px;font-size:.74rem;line-height:1.25}
+.stat+.stat{border-top:1px dotted rgba(60,45,20,.4)}
+.stat .k{font-weight:700;letter-spacing:.02em;white-space:nowrap;font-size:.68rem;text-transform:uppercase;color:#4a3a1e}
+.stat .dots{flex:1;border-bottom:1px dotted rgba(60,45,20,.55);transform:translateY(-3px)}
+.stat .v{font-weight:800;font-variant-numeric:tabular-nums;text-align:right;color:#1d1710}
+
+.sect{margin:10px 12px 0}
+.sect h3{
+  font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;
+  color:#fff;background:rgba(35,28,15,.85);display:inline-block;padding:2px 8px;border-radius:3px;
+}
+.sect ul{margin:6px 0 0;padding-left:17px}
+.sect li{font-size:.73rem;line-height:1.5;margin:3px 0;color:#2a2117}
+.sect li b{color:#7a2d0c}
+.ok li::marker{content:"✓  ";color:#4b6b2a;font-weight:800}
+.meas li::marker{content:"●  ";color:#1f5f8b}
+
+.mnemo{
+  margin:11px 12px 0;padding:9px 11px;border-radius:8px;
+  background:repeating-linear-gradient(135deg,rgba(201,162,39,.16) 0 8px, rgba(201,162,39,.07) 8px 16px);
+  border:1px dashed rgba(120,90,20,.65);
+  font-size:.74rem;line-height:1.45;color:#4a3510;
+}
+.mnemo b{display:block;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:#8a6a12;margin-bottom:3px}
+.mnemo i{font-style:italic;font-weight:700;color:#3b2a08}
+
+.steps{counter-reset:s;margin:8px 12px 0;padding:0;list-style:none}
+.steps li{
+  counter-increment:s;position:relative;padding:0 0 0 26px;margin:0 0 7px;
+  font-size:.73rem;line-height:1.45;color:#2a2117;
+}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:0;width:18px;height:18px;border-radius:50%;
+  background:var(--accent,#1f5f8b);color:#fff;font-size:.6rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.warn{
+  margin:10px 12px 0;padding:8px 10px;border-left:4px solid #a8541c;background:rgba(168,84,28,.10);
+  font-size:.68rem;line-height:1.45;color:#5a3211;border-radius:0 6px 6px 0;
+}
+.cfoot{
+  margin:11px 12px 0;padding-top:7px;border-top:2px solid rgba(60,45,20,.5);
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:#6a5734;font-weight:700;
+}
+.flipbtn{
+  background:rgba(35,28,15,.9);color:#f5ecd6;border-radius:999px;padding:6px 12px;
+  font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  box-shadow:0 2px 0 rgba(0,0,0,.35);
+}
+.nav{width:100%;display:flex;align-items:center;gap:10px;margin-top:12px}
+.nav .btn{flex:0 0 auto}
+.pips{flex:1;display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
+.pip{width:8px;height:8px;border-radius:50%;background:#39414f;border:1px solid #4a5364}
+.pip.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 6px rgba(201,162,39,.7)}
+.legal{max-width:420px;margin:18px auto 0;font-size:.58rem;line-height:1.6;color:#767e8c;text-align:center}
+@media (max-width:360px){
+  .chead h2{font-size:.88rem}
+  .stat{font-size:.7rem}
+}
+@media (min-width:760px){
+  .deck{width:440px}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Fichas <span>FAT &amp; SAT</span></h1>
+  <p>Cables aislados · Terminales y empalmes · Descargadores de sobretensión<br>Consulta rápida basada en normas IEC</p>
+</div>
+
+<div class="ipodwrap" id="ipodwrap">
+  <div class="ipod">
+    <div class="screen">
+      <div class="lcd-bar"><span id="lcdStep">Paso 1 de 3</span><span>◈ IEC</span></div>
+      <div class="lcd-title" id="lcdTitle">Equipo</div>
+      <ul class="lcd-list" id="lcdList"></ul>
+      <div class="lcd-foot">
+        <span id="lcdSel">—</span>
+        <span><b id="lcdCount">0</b> fichas</span>
+      </div>
+    </div>
+    <div class="wheelwrap">
+      <div class="wheel" id="wheel">
+        <span class="wlab menu">Menu</span>
+        <span class="wlab prev">◀◀</span>
+        <span class="wlab next">▶▶</span>
+        <span class="wlab play">▶❙❙</span>
+        <button class="center" id="okBtn"><b id="okLabel">OK</b><span id="okSub">seleccionar</span></button>
+      </div>
+    </div>
+  </div>
+  <p class="hint">Gira la rueda con el dedo (o usa <kbd>↑</kbd><kbd>↓</kbd>) · <b>MENÚ</b> vuelve atrás<br>El botón central confirma y, en el último paso, <b>CONSULTA</b> las fichas</p>
+</div>
+
+<div class="deck" id="deck">
+  <div class="deckbar">
+    <button class="btn" id="backBtn">‹ Menú</button>
+    <div class="crumb"><b id="crumbMain">—</b><span id="crumbSub">—</span></div>
+  </div>
+  <div class="card" id="card"><div class="inner" id="inner"></div></div>
+  <div class="nav">
+    <button class="btn" id="prevBtn">‹</button>
+    <div class="pips" id="pips"></div>
+    <button class="btn" id="nextBtn">›</button>
+  </div>
+  <p class="legal">Valores indicativos con fines didácticos. Antes de ensayar, verifica siempre la edición vigente de la norma aplicable y la especificación del proyecto/fabricante.</p>
+</div>
+
+<script>
+/* ============================================================
+   DIAGRAMAS (SVG en línea, esquemas de conexión)
+   ============================================================ */
+const S=(inner)=>`<svg viewBox="0 0 320 176" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+ .ln{fill:none;stroke:#23324a;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+ .hv{fill:none;stroke:#b3341c;stroke-width:2.6;stroke-linecap:round}
+ .gnd{fill:none;stroke:#2f6b2f;stroke-width:2.2;stroke-linecap:round}
+ .bx{fill:#eef3f8;stroke:#23324a;stroke-width:2}
+ .bx2{fill:#fdeee9;stroke:#b3341c;stroke-width:2}
+ .cu{fill:#c8862a;stroke:#7a4d12;stroke-width:1.5}
+ .ins{fill:#dfe7ef;stroke:#23324a;stroke-width:1.6}
+ .t{font:700 9px/1 -apple-system,Segoe UI,Roboto,sans-serif;fill:#23324a}
+ .tr{font:700 9px/1 -apple-system,Segoe UI,Roboto,sans-serif;fill:#b3341c}
+ .tg{font:700 9px/1 -apple-system,Segoe UI,Roboto,sans-serif;fill:#2f6b2f}
+ .ts{font:600 8px/1 -apple-system,Segoe UI,Roboto,sans-serif;fill:#5b6b80}
+</style>${inner}</svg>`;
+
+const gnd=(x,y)=>`<path class="gnd" d="M${x} ${y}v9M${x-8} ${y+9}h16M${x-5} ${y+13}h10M${x-2.5} ${y+17}h5"/>`;
+const cable=(x,y,w)=>`
+ <rect class="ins" x="${x}" y="${y-11}" width="${w}" height="22" rx="6"/>
+ <rect class="cu" x="${x}" y="${y-4}" width="${w}" height="8" rx="4"/>
+ <path class="ln" d="M${x} ${y-11}h${w}M${x} ${y+11}h${w}" stroke-dasharray="3 3" opacity=".7"/>`;
+const term=(x,y,f)=>`
+ <path class="ln" d="M${x} ${y}h16"/>
+ <path class="bx" d="M${x+16} ${y-4}l10-16h10l10 16v8l-10 16h-10l-10-16z"/>
+ <path class="ln" d="M${x+36} ${y-20}v-12"/><circle cx="${x+36}" cy="${y-34}" r="3.5" fill="#23324a"/>
+ <text class="ts" x="${x+8}" y="${y+34}">${f||''}</text>`;
+
+const DIAG={
+ /* fuente resonante + medida de descargas parciales */
+ pd:(o={})=>S(`
+  <text class="t" x="96" y="30">objeto en ensayo (cable + accesorios)</text>
+  <rect class="bx2" x="8" y="56" width="66" height="50" rx="6"/>
+  <text class="tr" x="14" y="76">FUENTE</text><text class="tr" x="14" y="88">RESONANTE</text>
+  <text class="ts" x="14" y="100">20–300 Hz</text>
+  ${gnd(41,106)}
+  <text class="tr" x="78" y="64">${o.v||'1,75 U₀'}</text>
+  <path class="hv" d="M74 76h38"/>
+  ${cable(112,76,104)}
+  <path class="ln" d="M112 87v18h104v-18" stroke-dasharray="4 3"/>
+  ${gnd(150,105)}
+  <text class="tg" x="166" y="112">pantalla a tierra</text>
+  ${term(216,76,'')}
+  <path class="hv" d="M94 76v42"/>
+  <rect class="bx" x="72" y="118" width="44" height="22" rx="4" fill="#fff8e6"/>
+  <text class="t" x="86" y="133">Ck</text>
+  <path class="ln" d="M94 140v6h40"/>
+  <rect class="bx" x="134" y="132" width="76" height="32" rx="5"/>
+  <text class="t" x="140" y="146">MEDIDOR DP</text><text class="t" x="140" y="158">(pC)</text>
+  <text class="ts" x="216" y="146">acoplador Ck +</text>
+  <text class="ts" x="216" y="158">impedancia de medida</text>`),
+
+ /* muestra: corte transversal y medidas dimensionales */
+ sample:(o={})=>S(`
+  <circle cx="96" cy="86" r="66" fill="#3a3f46" stroke="#23324a" stroke-width="1.5"/>
+  <circle cx="96" cy="86" r="58" fill="#c9ced6" stroke="#23324a" stroke-width="1.2"/>
+  <circle cx="96" cy="86" r="53" fill="#4a5158"/>
+  <circle cx="96" cy="86" r="48" fill="#dfe7ef" stroke="#23324a" stroke-width="1.2"/>
+  <circle cx="96" cy="86" r="27" fill="#4a5158"/>
+  <circle cx="96" cy="86" r="22" fill="#c8862a" stroke="#7a4d12" stroke-width="1.5"/>
+  <path class="ln" d="M96 86h70" stroke-width="1.4"/>
+  <path class="ln" d="M118 82v8M144 82v8M154 82v8M162 82v8" stroke-width="1.4"/>
+  <text class="ts" x="176" y="46">${o.k||'muestra por lote'}</text>
+  <text class="ts" x="176" y="66">espesor de aislamiento</text>
+  <text class="ts" x="176" y="80">semiconductoras int./ext.</text>
+  <text class="ts" x="176" y="94">pantalla y cubierta</text>
+  <text class="ts" x="176" y="108">Ø exterior y excentricidad</text>
+  <text class="ts" x="10" y="168">hot set del XLPE: probeta a 200 °C con carga normalizada</text>`),
+
+ /* ensayo de tensión soportada c.a. */
+ ac:(o={})=>S(`
+  <text class="tr" x="84" y="34">${o.v||'2,5 U₀'}</text>
+  <rect class="bx2" x="8" y="50" width="70" height="56" rx="6"/>
+  <text class="tr" x="13" y="70">EQUIPO DE</text><text class="tr" x="13" y="82">ENSAYO c.a.</text><text class="ts" x="13" y="98">${o.f||'20–300 Hz'}</text>
+  ${gnd(43,106)}
+  <path class="hv" d="M78 70h22"/>
+  <circle cx="110" cy="70" r="10" fill="#fff" stroke="#b3341c" stroke-width="2"/>
+  <text class="tr" x="103" y="52">kV</text>
+  <path class="hv" d="M120 70h14"/>
+  ${cable(134,70,104)}
+  <text class="t" x="146" y="46">conductor bajo tensión</text>
+  <path class="ln" d="M134 81v18h104v-18" stroke-dasharray="4 3"/>
+  ${gnd(186,99)}
+  <text class="tg" x="112" y="126">pantalla y cubierta a tierra</text>
+  ${term(238,70,'terminación')}
+  <rect class="bx" x="8" y="132" width="86" height="32" rx="5"/>
+  <text class="t" x="14" y="146">TEMPORIZADOR</text><text class="t" x="14" y="158">${o.t||'30 min'}</text>
+  <text class="ts" x="104" y="148">se sube en escalones hasta la tensión de</text>
+  <text class="ts" x="104" y="160">ensayo y se reduce a &lt; 40 % antes de abrir</text>`),
+
+ /* resistencia del conductor a 4 hilos */
+ r4:(o={})=>S(`
+  <text class="t" x="88" y="34">medida de resistencia del conductor</text>
+  ${cable(84,64,212)}
+  <text class="tr" x="84" y="48">I+</text><text class="t" x="114" y="48">U+</text>
+  <text class="t" x="250" y="48">U−</text><text class="tr" x="282" y="48">I−</text>
+  <path class="hv" d="M90 75v15h-60v20"/>
+  <path class="ln" d="M120 75v21h-70v14"/>
+  <path class="ln" d="M258 75v27h-188v8"/>
+  <path class="hv" d="M290 75v31h-200v4"/>
+  <rect class="bx" x="8" y="110" width="106" height="44" rx="6"/>
+  <text class="t" x="14" y="130">MICRO-OHMÍMETRO</text>
+  <text class="ts" x="14" y="145">${o.i||'≥ 10 A c.c.'} · 4 hilos</text>
+  <rect class="bx" x="190" y="112" width="124" height="42" rx="6" fill="#fff8e6"/>
+  <text class="t" x="196" y="132">R corregida a 20 °C</text>
+  <text class="ts" x="196" y="146">y referida a 1 km</text>`),
+
+ /* ensayo c.c. de la cubierta exterior */
+ sheath:(o={})=>S(`
+  <text class="tr" x="80" y="60">${o.v||'10 kV c.c.'}</text>
+  <rect class="bx2" x="8" y="66" width="64" height="48" rx="6"/>
+  <text class="tr" x="13" y="86">FUENTE</text><text class="tr" x="13" y="100">c.c.  (−)</text>
+  ${gnd(40,114)}
+  <path class="hv" d="M72 90h32"/>
+  <rect x="104" y="72" width="150" height="36" rx="10" fill="#3a3f46" stroke="#23324a" stroke-width="2"/>
+  <rect x="104" y="84" width="150" height="12" rx="6" fill="#c9ced6" stroke="#23324a" stroke-width="1.4"/>
+  <text class="ts" x="258" y="80">cubierta</text>
+  <text class="ts" x="258" y="94">pantalla</text>
+  <path class="gnd" d="M40 132h250" stroke-dasharray="5 4"/>
+  <path class="gnd" d="M66 132l-6 8M106 132l-6 8M146 132l-6 8M186 132l-6 8M226 132l-6 8M266 132l-6 8" stroke-width="1.6"/>
+  <text class="tg" x="96" y="150">tierra / agua del terreno</text>
+  <text class="ts" x="8" y="168">seccionar los SVL antes del ensayo y medir la I de fuga</text>`),
+
+ /* ensayo VLF 0,1 Hz */
+ vlf:(o={})=>S(`
+  <text class="t" x="96" y="34">tramo instalado · una fase a la vez</text>
+  <rect class="bx2" x="8" y="56" width="70" height="52" rx="6"/>
+  <text class="tr" x="14" y="76">VLF 0,1 Hz</text>
+  <text class="tr" x="14" y="90">${o.v||'3 U₀'}</text>
+  <text class="ts" x="14" y="102">coseno-rect.</text>
+  ${gnd(43,108)}
+  <path class="hv" d="M78 76h34"/>
+  ${cable(112,76,104)}
+  ${term(216,76,'')}
+  <path class="ln" d="M112 87v18h104v-18" stroke-dasharray="4 3"/>
+  ${gnd(160,105)}
+  <text class="tg" x="176" y="112">pantallas a tierra</text>
+  <path class="hv" d="M20 140q12-20 24 0t24 0" fill="none" stroke-width="1.8"/>
+  <text class="ts" x="14" y="166">onda de muy baja frecuencia</text>
+  <text class="ts" x="152" y="150">las otras dos fases</text>
+  <text class="ts" x="152" y="162">y sus pantallas, a tierra</text>`),
+
+ /* capacitancia y tan delta por la toma capacitiva */
+ tand:(o={})=>S(`
+  <path class="ln" d="M150 150h84"/>
+  <path class="bx" d="M168 150 l6-96h14l6 96z"/>
+  <path class="ln" d="M164 138h32M162 122h36M160 106h40M158 90h44M156 74h48" opacity=".8"/>
+  <circle cx="181" cy="46" r="5" fill="#b3341c"/>
+  <path class="hv" d="M181 41v-16h-70"/>
+  <rect class="bx2" x="30" y="10" width="82" height="46" rx="6"/>
+  <text class="tr" x="36" y="28">PUENTE C /</text><text class="tr" x="36" y="40">tan δ · 10 kV</text>
+  <text class="ts" x="36" y="52">${o.f||'15 – 400 Hz'}</text>
+  <path class="ln" d="M70 56v38h34"/>
+  <rect class="bx" x="104" y="80" width="48" height="28" rx="5"/>
+  <text class="t" x="110" y="98">TOMA C₂</text>
+  <path class="ln" d="M152 94h16"/>
+  <text class="ts" x="200" y="70">aislador pasante</text>
+  <text class="ts" x="200" y="82">tipo condensador</text>
+  ${gnd(234,150)}
+  <text class="tg" x="246" y="156">brida</text>
+  <text class="ts" x="12" y="120">se retira la puesta a</text>
+  <text class="ts" x="12" y="132">tierra del tap para medir</text>
+  <text class="ts" x="12" y="144">y se repone al terminar</text>`),
+
+ /* corriente de fuga del descargador */
+ leak:(o={})=>S(`
+  <path class="hv" d="M96 24h150"/>
+  <text class="tr" x="100" y="16">línea a ${o.u||'Uc'}</text>
+  <path class="hv" d="M140 24v10"/>
+  <rect class="bx2" x="122" y="34" width="36" height="86" rx="8"/>
+  <path class="ln" d="M122 52h36M122 70h36M122 88h36M122 106h36" opacity=".55"/>
+  <text class="ts" x="166" y="56">descargador</text><text class="ts" x="166" y="68">de ZnO</text>
+  <text class="ts" x="8" y="46">referencia de</text>
+  <text class="ts" x="8" y="58">tensión de red</text>
+  <text class="ts" x="8" y="70">para separar Ir</text>
+  <path class="ln" d="M140 120v9"/>
+  <circle cx="140" cy="138" r="9" fill="none" stroke="#2f6b2f" stroke-width="2.4"/>
+  <text class="tg" x="154" y="142">pinza LCM</text>
+  <path class="ln" d="M140 147v9h-22"/>
+  <rect class="bx" x="14" y="130" width="104" height="38" rx="6"/>
+  <text class="t" x="20" y="147">ANALIZADOR</text>
+  <text class="ts" x="20" y="160">I total e I resistiva</text>
+  <path class="ln" d="M140 156h124v-28"/>
+  <rect class="bx" x="224" y="100" width="80" height="28" rx="5"/>
+  <text class="t" x="230" y="118">CONTADOR</text>
+  <path class="ln" d="M264 156h32"/>
+  ${gnd(296,156)}`),
+
+ /* resistencia de aislamiento con megóhmetro */
+ megger:(o={})=>S(`
+  <rect class="bx" x="10" y="56" width="94" height="54" rx="6"/>
+  <text class="t" x="16" y="76">MEGÓHMETRO</text>
+  <text class="tr" x="16" y="90">${o.v||'5 kV c.c.'}</text>
+  <text class="ts" x="16" y="103">1 min · IP a 10 min</text>
+  <path class="hv" d="M104 70h24"/><text class="tr" x="110" y="64">L</text>
+  <path class="ln" d="M104 96h14v46h30"/><text class="tg" x="110" y="112">E</text>
+  <rect class="bx2" x="128" y="34" width="40" height="96" rx="8"/>
+  <path class="ln" d="M128 54h40M128 74h40M128 94h40M128 114h40" opacity=".5"/>
+  <text class="ts" x="176" y="52">objeto en</text><text class="ts" x="176" y="64">ensayo</text>
+  <path class="ln" d="M148 130v12"/>
+  <path class="ln" d="M148 142h32"/>
+  ${gnd(180,142)}
+  <rect class="bx" x="212" y="76" width="100" height="44" rx="6" fill="#fff8e6"/>
+  <text class="t" x="218" y="96">R = U / I</text>
+  <text class="ts" x="218" y="110">IP = R10min / R1min</text>
+  <text class="ts" x="10" y="170">descargar el objeto ≥ 5× el tiempo de ensayo</text>`),
+
+ /* generador de impulsos: tensión residual */
+ imp:(o={})=>S(`
+  <rect class="bx2" x="8" y="46" width="80" height="62" rx="6"/>
+  <text class="tr" x="14" y="66">GENERADOR</text><text class="tr" x="14" y="78">DE IMPULSOS</text>
+  <text class="ts" x="14" y="92">${o.w||'8/20 µs'}</text><text class="ts" x="14" y="104">${o.i||'In = 10 kA'}</text>
+  <path class="hv" d="M88 66h32"/>
+  <path class="hv" d="M22 142q10-26 20 0" fill="none" stroke-width="1.8"/>
+  <text class="ts" x="14" y="164">onda de corriente</text>
+  <rect class="bx2" x="120" y="30" width="40" height="92" rx="8"/>
+  <path class="ln" d="M120 50h40M120 70h40M120 90h40" opacity=".55"/>
+  <text class="ts" x="166" y="44">descargador</text>
+  <path class="ln" d="M140 122v6"/>
+  <rect class="bx" x="112" y="128" width="56" height="20" rx="4"/>
+  <text class="t" x="118" y="142">SHUNT</text>
+  ${gnd(140,148)}
+  <path class="ln" d="M160 60h34v50h30"/>
+  <rect class="bx" x="224" y="86" width="88" height="48" rx="6"/>
+  <text class="t" x="230" y="104">OSCILOSCOPIO</text>
+  <text class="t" x="230" y="118">Ures (kV cresta)</text>
+  <text class="ts" x="230" y="130">con divisor</text>`),
+
+ /* termografía infrarroja */
+ ir:(o={})=>S(`
+  <path class="hv" d="M30 24h190"/>
+  <text class="tr" x="228" y="28">barra / línea</text>
+  <path class="hv" d="M61 24v16M121 24v16M181 24v16"/>
+  <rect class="bx2" x="44" y="40" width="34" height="78" rx="7"/>
+  <rect class="bx2" x="104" y="40" width="34" height="78" rx="7"/>
+  <rect class="bx2" x="164" y="40" width="34" height="78" rx="7"/>
+  ${gnd(61,118)}${gnd(121,118)}${gnd(181,118)}
+  <text class="ts" x="55" y="150">L1</text><text class="ts" x="115" y="150">L2</text><text class="ts" x="175" y="150">L3</text>
+  <path class="ln" d="M240 68l-26 15 26 15z" fill="#eef3f8"/>
+  <rect class="bx" x="240" y="60" width="72" height="46" rx="6"/>
+  <text class="t" x="246" y="80">CÁMARA IR</text>
+  <text class="ts" x="246" y="94">ε ≈ 0,95</text>
+  <text class="ts" x="212" y="126">comparar fase</text>
+  <text class="ts" x="212" y="138">con fase</text>
+  <text class="ts" x="8" y="168">${o.k||'ΔT entre fases < 1 K = normal'}</text>`),
+
+ /* resistencia de contacto del conector */
+ contact:(o={})=>S(`
+  <text class="tr" x="112" y="38">I = 100 A c.c.</text>
+  <path class="hv" d="M40 63v-20h240v20"/>
+  ${cable(14,74,110)}
+  ${cable(196,74,110)}
+  <rect class="cu" x="118" y="60" width="84" height="28" rx="6"/>
+  <text class="ts" x="212" y="56">conector a compresión</text>
+  <path class="ln" d="M104 74v34M216 74v34"/>
+  <rect class="bx" x="80" y="108" width="160" height="42" rx="6"/>
+  <text class="t" x="88" y="128">MICRO-OHMÍMETRO</text>
+  <text class="ts" x="88" y="142">${o.k||'k = R_conector / R_conductor ≤ 1'}</text>
+  <text class="ts" x="14" y="168">medir entre marcas de referencia y a igual temperatura</text>`),
+
+ /* pantallas, cajas de enlace y cross-bonding */
+ bond:(o={})=>S(`
+  ${cable(16,54,86)}
+  <rect class="bx" x="102" y="40" width="18" height="28" rx="4"/>
+  ${cable(120,54,80)}
+  <rect class="bx" x="200" y="40" width="18" height="28" rx="4"/>
+  ${cable(218,54,86)}
+  <text class="ts" x="92" y="34">empalme</text><text class="ts" x="190" y="34">empalme</text>
+  <path class="ln" d="M16 65v12"/>${gnd(16,77)}
+  <path class="ln" d="M304 65v12"/>${gnd(304,77)}
+  <path class="ln" d="M111 68v28h98V68"/>
+  <path class="ln" d="M160 96v16"/>
+  <rect class="bx2" x="96" y="112" width="128" height="34" rx="6"/>
+  <text class="tr" x="104" y="128">CAJA DE ENLACE</text>
+  <text class="ts" x="104" y="140">SVL / cross-bonding</text>
+  <text class="ts" x="14" y="168">verificar continuidad, secuencia y estado de los SVL</text>`),
+
+ /* estanqueidad, presión y nivel */
+ seal:(o={})=>S(`
+  <circle cx="141" cy="22" r="7" class="bx"/>
+  <rect class="bx2" x="118" y="30" width="46" height="96" rx="10"/>
+  <path class="ln" d="M118 54h46M118 78h46M118 102h46" opacity=".5"/>
+  <path class="ln" d="M164 46h30"/>
+  <circle cx="208" cy="46" r="15" fill="#fff" stroke="#23324a" stroke-width="2"/>
+  <path class="ln" d="M208 46l8-8"/>
+  <text class="t" x="228" y="42">MANÓMETRO</text>
+  <text class="ts" x="228" y="56">${o.p||'SF₆ / aceite'}</text>
+  <path class="ln" d="M141 126v12"/>${gnd(141,138)}
+  <rect class="bx" x="10" y="76" width="88" height="40" rx="6"/>
+  <text class="t" x="16" y="94">DETECTOR DE</text><text class="t" x="16" y="108">FUGAS</text>
+  <path class="ln" d="M98 96h20"/>
+  <text class="ts" x="180" y="100">verificar el alivio</text>
+  <text class="ts" x="180" y="112">de presión</text>
+  <text class="ts" x="10" y="170">${o.k||'fuga < 1 % anual · sin trazas de aceite ni humedad'}</text>`)
+};
+
+/* ============================================================
+   MENÚ
+   ============================================================ */
+const EQUIPOS=[
+ {id:'cable',n:'Cable aislado',s:'Aislamiento seco XLPE / EPR'},
+ {id:'acc',  n:'Terminales y empalmes',s:'Accesorios del sistema de cable'},
+ {id:'da',   n:'Descargadores',s:'Pararrayos de óxido metálico (ZnO)'}
+];
+const NIVELES=[
+ {id:'MT', n:'Media tensión',      s:'6 – 36 kV · ej. 12/20 (24) kV'},
+ {id:'AT', n:'Alta tensión',       s:'45 – 150 kV · ej. 76/132 (145) kV'},
+ {id:'EAT',n:'Extra alta tensión', s:'> 170 kV · ej. 190/330 (362) kV'}
+];
+const PRUEBAS=[
+ {id:'FAT',n:'FAT · en fábrica',s:'Rutina, muestra y aceptación'},
+ {id:'SAT',n:'SAT · en sitio',  s:'Después de la instalación'}
+];
+
+/* ============================================================
+   PARÁMETROS POR NIVEL DE TENSIÓN
+   ============================================================ */
+const P={
+ cable:{
+  MT :{std:'IEC 60502-2',u:'12/20 (24) kV',u0:'U₀ = 12 kV',pdv:'1,73 U₀ ≈ 20,8 kV',pds:'≤ 10 pC',acv:'3,5 U₀ = 42 kV',act:'5 min',
+       shv:'≈ 4 kV c.c./mm (máx. 10 kV)',sat:'VLF 0,1 Hz · 3 U₀ = 36 kV',satt:'15 – 60 min',alt:'c.a. 20–300 Hz a 2 U₀ · 60 min · o U₀ durante 24 h',li:'125 kV cresta',sec:'§16 rutina / §17 muestra'},
+  AT :{std:'IEC 60840',u:'76/132 (145) kV',u0:'U₀ = 76 kV',pdv:'1,75 U₀ ≈ 133 kV',pds:'≤ 5 pC',acv:'2,5 U₀ = 190 kV',act:'30 min',
+       shv:'10 kV c.c.',sat:'1,7 U₀ ≈ 129 kV',satt:'60 min',alt:'U₀ = 76 kV durante 24 h (energización controlada)',li:'650 kV cresta',sec:'§9 rutina / §10 muestra'},
+  EAT:{std:'IEC 62067',u:'190/330 (362) kV',u0:'U₀ = 190 kV',pdv:'1,5 U₀ ≈ 285 kV',pds:'≤ 5 pC',acv:'2,5 U₀ ≈ 475 kV *',act:'30 min',
+       shv:'10 kV c.c.',sat:'1,7 U₀ ≈ 323 kV',satt:'60 min',alt:'1,4 U₀ ≈ 266 kV · 60 min, o U₀ durante 24 h',li:'1 175 kV cresta',sec:'§9 rutina / §10 muestra'}
+ },
+ da:{
+  MT :{ur:'Ur = 30 kV',uc:'Uc = 24 kV',ins:'In = 10 kA',cl:'clase DH (distribución)',res:'Ures ≈ 84 kV a 10 kA',ir:'Ir < 100 µA',it:'It ≈ 0,2 – 0,6 mA',ri:'≥ 1 000 MΩ',mg:'2,5 kV c.c.'},
+  AT :{ur:'Ur = 120 kV',uc:'Uc = 96 kV',ins:'In = 10 kA',cl:'clase SM / SH (estación)',res:'Ures ≈ 300 kV a 10 kA',ir:'Ir < 200 µA',it:'It ≈ 0,5 – 1,2 mA',ri:'≥ 2 000 MΩ',mg:'5 kV c.c.'},
+  EAT:{ur:'Ur = 336 kV',uc:'Uc = 267 kV',ins:'In = 20 kA',cl:'clase SH (estación)',res:'Ures ≈ 780 kV a 20 kA',ir:'Ir < 300 µA',it:'It ≈ 1 – 3 mA',ri:'≥ 5 000 MΩ',mg:'5 kV c.c.'}
+ }
+};
+const ACCSTD={MT:'IEC 60502-4',AT:'IEC 60840 + IEC 60137',EAT:'IEC 62067 + IEC 62271-209'};
+
+/* ============================================================
+   FICHAS
+   ============================================================ */
+function cableFAT(l){const p=P.cable[l];return [
+ {code:'F-1',t:'Resistencia eléctrica del conductor',norm:p.std+' · rutina',diag:'r4',
+  cap:'Medida a 4 hilos sobre el tambor completo, con corrección a 20 °C y a 1 km.',
+  stats:[['Corriente','≥ 10 A c.c.'],['Método','4 hilos (Kelvin)'],['Referencia','IEC 60228'],['Tolerancia','≤ valor máx. tabulado']],
+  medir:['R medida (mΩ) y longitud exacta del tramo','Temperatura del conductor (estabilizada ≥ 12 h)','R corregida a 20 °C y a 1 km'],
+  esperar:['R₂₀ ≤ máximo de IEC 60228 para la sección y clase (p. ej. 0,0754 Ω/km en Cu 240 mm² clase 2)','Desviación entre fases < 2 %'],
+  mnemo:'«Cobre frío y kilómetro entero»: sin corregir a 20 °C y a 1 km, el número no vale nada.',
+  pasos:['Estabilizar el tambor a temperatura ambiente ≥ 12 h y registrar T.','Conectar las pinzas de corriente en los extremos y las de tensión por dentro de ellas.','Inyectar la corriente, esperar lectura estable e invertir polaridad para promediar.','Corregir: R₂₀ = R_T · 254,5 / (234,5 + T) para cobre.','Dividir por la longitud real y comparar con IEC 60228.'],
+  warn:'Nunca midas con la corriente de un megóhmetro: la resistencia del conductor se mide con corriente alta y baja tensión.'},
+
+ {code:'F-2',t:'Descargas parciales en fábrica',norm:p.std+' · '+p.sec,diag:'pd',diagOpts:{v:p.pdv},
+  cap:'Fuente resonante, acoplador capacitivo (Ck) e impedancia de medida; sala apantallada.',
+  stats:[['Tensión de ensayo',p.pdv],['Sensibilidad exigida',p.pds],['Frecuencia','20 – 300 Hz'],['Secuencia','subir a 1,75 U₀, bajar y medir']],
+  medir:['Ruido de fondo antes de energizar','Magnitud de DP (pC) a la tensión especificada','Tensión de inicio (DIV) y de extinción (DEV)','Patrón φ-q-n para identificar el defecto'],
+  esperar:['Sin DP detectable procedente del objeto en ensayo, con la sensibilidad '+p.pds,'Ruido de fondo al menos 2 veces inferior a la sensibilidad exigida','Calibración con inyector de carga trazable antes y después'],
+  mnemo:'«Sube alto, mide bajo»: se eleva a ~2 U₀ y se mide bajando a la tensión de DP.',
+  pasos:['Calibrar el circuito con inyector de carga en el propio objeto en ensayo.','Registrar el ruido de fondo con el objeto conectado y sin tensión.','Elevar hasta 2 U₀ (acondicionamiento), mantener ~10 s.','Bajar a '+p.pdv+' y registrar durante al menos 10 s.','Descargar, poner a tierra y repetir la calibración para validar la medida.'],
+  warn:'Si aparece DP, localiza antes de rechazar: puede venir de las terminaciones de ensayo o del entorno, no del cable.'},
+
+ {code:'F-3',t:'Ensayo de tensión soportada c.a.',norm:p.std+' · rutina',diag:'ac',diagOpts:{v:p.acv,t:p.act},
+  cap:'Conductor a la fuente, pantalla y cubierta a tierra; terminaciones de ensayo en agua o al aire.',
+  stats:[['Tensión',p.acv],['Duración',p.act],['Frecuencia','20 – 300 Hz'],['Criterio','sin perforación']],
+  medir:['Tensión aplicada (valor eficaz por medida de cresta/√2)','Tiempo real de aplicación','Corriente capacitiva de carga (estabilidad)'],
+  esperar:['No se produce perforación del aislamiento ni de los accesorios de ensayo','Corriente estable, sin escalones ni transitorios repetidos','Ensayo válido sobre el 100 % de la producción (ensayo de rutina)'],
+  mnemo:'«'+(l==='MT'?'3,5 por 5':'2,5 por 30')+'»: '+(l==='MT'?'3,5 U₀ durante 5 minutos':'2,5 U₀ durante 30 minutos')+'.',
+  pasos:['Verificar que pantalla, armadura y cubierta están sólidamente a tierra.','Subir la tensión de forma continua (≈ 1 – 2 kV/s) hasta el valor de ensayo.','Arrancar el cronómetro al alcanzar el valor y mantener '+p.act+'.','Reducir a menos del 40 % antes de abrir y descargar el objeto.','Poner a tierra el conductor ≥ 5 min antes de manipularlo.'],
+  warn:'La energía almacenada en un cable largo es muy alta: descarga siempre con pértiga y mantén la puesta a tierra mientras haya personas en la zona.'},
+
+ {code:'F-4',t:'Ensayo eléctrico de la cubierta exterior',norm:p.std+' + IEC 62230 / IEC 60229',diag:'sheath',diagOpts:{v:p.shv},
+  cap:'Cubierta con capa conductora exterior o baño; pantalla metálica al polo opuesto.',
+  stats:[['Tensión',p.shv],['Duración','1 min (chispa: en línea)'],['Tipo','c.c. o chispa en producción'],['Criterio','sin perforación']],
+  medir:['Corriente de fuga a través de la cubierta','Tensión aplicada y tiempo','Espesor de cubierta (para fijar la tensión)'],
+  esperar:['Sin perforación ni descarga superficial','Corriente de fuga estable y de valor bajo (pocos mA)','Continuidad de la capa semiconductora exterior si el diseño la incluye'],
+  mnemo:'«La chaqueta también se prueba»: la cubierta protege la corrosión de la pantalla; si falla, el cable envejece por fuera.',
+  pasos:['Comprobar que la cubierta está limpia y seca.','Aplicar el electrodo exterior (agua, malla o cadena del spark tester).','Aplicar '+p.shv+' durante 1 min entre pantalla y electrodo exterior.','Registrar corriente de fuga y ausencia de descargas.','Marcar y reparar cualquier punto perforado y repetir el ensayo.'],
+  warn:'En obra este mismo ensayo es la mejor herramienta para detectar daños de tendido: repítelo antes y después de instalar.'},
+
+ {code:'F-5',t:'Ensayos de muestra y verificación dimensional',norm:p.std+' · '+p.sec,diag:'sample',diagOpts:{k:'una muestra por lote'},
+  cap:'Corte de una muestra por lote: medidas sobre el aislamiento, semiconductoras y cubierta.',
+  stats:[['Frecuencia','1 muestra por lote'],['Espesor mín. aisl.','≥ 90 % del nominal − 0,1 mm'],['Hot set (XLPE)','elongación ≤ 175 %, perm. ≤ 15 %'],['Capacitancia','≤ valor declarado + 8 %']],
+  medir:['Espesores de aislamiento, semiconductora y cubierta (mín. y medio)','Diámetro exterior y excentricidad','Ensayo de hot set del XLPE reticulado','Capacitancia y examen de conductor (IEC 60228)'],
+  esperar:['Todas las dimensiones dentro de tolerancia de la norma y del plano','Hot set conforme (reticulación correcta)','Ausencia de contaminantes, huecos o protuberancias por encima del límite (microscopía)'],
+  mnemo:'«Lo que no se ve, se corta»: los ensayos de muestra son la única forma de auditar la calidad interna del aislamiento.',
+  pasos:['Seleccionar la muestra según el tamaño del lote y trazarla al tambor.','Preparar probetas y medir espesores con proyector/microscopio.','Ejecutar el hot set en horno a 200 °C con la carga especificada.','Medir capacitancia y comparar con lo declarado.','Documentar en el protocolo FAT con las fotos de las probetas.'],
+  warn:'Si una muestra falla, la norma permite repetir sobre dos muestras adicionales del mismo lote: si vuelve a fallar, el lote se rechaza.'},
+
+ {code:'F-6',t:'Impulso tipo rayo (ensayo de tipo / PQ)',norm:p.std+' · ensayo de tipo',diag:'imp',diagOpts:{w:'1,2/50 µs',i:p.li},
+  cap:'10 impulsos de cada polaridad sobre el sistema calentado al ciclo térmico.',
+  stats:[['Onda','1,2 / 50 µs'],['Amplitud',p.li],['Nº impulsos','10 (+) y 10 (−)'],['Temp. conductor','θ + 5 a 10 K']],
+  medir:['Amplitud y forma de cada impulso registrado','Temperatura del conductor durante el ensayo','Ensayo de tensión c.a. posterior (2 U₀ / 15 min) sin perforación'],
+  esperar:['Sin perforación en ninguno de los 20 impulsos','Forma de onda dentro de tolerancias (±3 % amplitud, ±30 % frente)','El sistema supera el ensayo c.a. posterior'],
+  mnemo:'«Diez y diez, caliente»: 10 positivos, 10 negativos y siempre con el conductor a temperatura de servicio + 5 K.',
+  pasos:['Calentar el bucle de ensayo por circulación de corriente hasta la temperatura objetivo.','Ajustar el generador con impulsos de reducida amplitud.','Aplicar 10 impulsos positivos y 10 negativos al valor pleno.','Ejecutar el ensayo c.a. de comprobación posterior.','Desmontar y examinar los accesorios (opcional, para diagnóstico).'],
+  warn:'No es un ensayo de rutina: se realiza sobre el sistema (cable + accesorios) en la homologación, no en cada suministro.'}
+];}
+
+function cableSAT(l){const p=P.cable[l];const after=(l==='MT')?'§20 ensayos después de la instalación':'§16 ensayos después de la instalación';return [
+ {code:'S-1',t:'Verificación previa: aislamiento y continuidad',norm:'Buena práctica · IEC 60364 / IEC 60840 §16',diag:'megger',diagOpts:{v:(l==='MT'?'2,5 kV c.c.':'5 kV c.c.')},
+  cap:'Megóhmetro entre conductor y pantalla, con las otras fases a tierra.',
+  stats:[['Tensión de prueba',(l==='MT'?'2,5 kV c.c.':'5 kV c.c.')],['Duración','1 min (y 10 min si IP)'],['R aislamiento','≥ 1 000 MΩ típico'],['Índice de polarización','≥ 2 (informativo)']],
+  medir:['R de aislamiento conductor–pantalla de cada fase','R de aislamiento pantalla–tierra (cubierta)','Continuidad del conductor y de la pantalla, e identificación de fases'],
+  esperar:['Valores altos y equilibrados entre las tres fases (dispersión < 30 %)','Sin tendencia decreciente durante el minuto de medida','Continuidad y correspondencia de fases correcta en ambos extremos'],
+  mnemo:'«Primero el megger, después los kilovoltios»: es barato, rápido y evita destruir un cable ya dañado.',
+  pasos:['Aislar el tramo, abrir seccionadores y descargar a tierra.','Desconectar pantallas de las cajas de enlace donde aplique.','Medir fase–pantalla en cada fase (1 min), luego pantalla–tierra.','Registrar temperatura y humedad ambiente.','Descargar y poner a tierra al terminar cada medida.'],
+  warn:'Un megóhmetro NO sustituye el ensayo de tensión: no detecta defectos que solo se manifiestan a tensión de servicio.'},
+
+ {code:'S-2',t:'Ensayo c.c. de la cubierta exterior',norm:(l==='MT'?'IEC 60502-2 §20':'IEC 60840/62067 §16.2')+' · IEC 60229',diag:'sheath',diagOpts:{v:p.shv},
+  cap:'Polo negativo a la pantalla, tierra del terreno como electrodo exterior.',
+  stats:[['Tensión',p.shv],['Duración','1 min'],['Polaridad','negativa a la pantalla'],['Criterio','sin perforación']],
+  medir:['Corriente de fuga durante el minuto de ensayo','Estabilidad de la lectura (tendencia creciente = daño)','Localización del defecto si falla (método del paso de tensión)'],
+  esperar:['Sin perforación de la cubierta y corriente de fuga estable','Valores comparables entre las tres fases del mismo tramo','Si falla: localizar con generador de impulsos + bobinas de paso de tensión y reparar'],
+  mnemo:'«10 kV, 1 minuto, cubierta»: la prueba más barata para saber si el tendido dañó el cable.',
+  pasos:['Desconectar SVL, descargadores de pantalla y puestas a tierra de la caja de enlace.','Conectar la fuente c.c. entre pantalla y tierra.','Aplicar '+p.shv+' durante 1 min y registrar corriente.','Descargar la capacidad de la cubierta antes de desconectar.','Restablecer todas las conexiones de la caja de enlace y verificarlas.'],
+  warn:'Si olvidas retirar los SVL, los estás ensayando a ellos: darán falso fallo o se destruirán.'},
+
+ {code:'S-3',t:'Ensayo de tensión del aislamiento principal',norm:(l==='MT'?'IEC 60502-2 §20':'IEC 60840/62067 §16.3')+' · IEC 60060-3',
+  diag:(l==='MT'?'vlf':'ac'),diagOpts:(l==='MT'?{v:'3 U₀ = 36 kV'}:{v:p.sat,f:'20 – 300 Hz',t:p.satt}),
+  cap:(l==='MT'?'Fuente VLF 0,1 Hz sobre una fase; las otras fases y pantallas a tierra.':'Fuente resonante variable en frecuencia; ensayo por fase con el tramo completo instalado.'),
+  stats:[['Tensión',p.sat],['Duración',p.satt],['Frecuencia',(l==='MT'?'0,1 Hz (VLF)':'20 – 300 Hz')],['Alternativa',(l==='MT'?'2 U₀ c.a. · 60 min':'U₀ durante 24 h')]],
+  medir:['Tensión aplicada y tiempo efectivo','Corriente de carga / potencia reactiva del circuito','DP simultánea si el equipo lo permite (muy recomendable)','Temperatura y humedad; estado de las terminaciones'],
+  esperar:['Sin perforación ni descarga disruptiva durante todo el ensayo','Corriente estable, sin saltos ni disparos de la protección','Sin DP en accesorios por encima del criterio acordado','Opción alternativa admitida: '+p.alt],
+  mnemo:'«En obra se baja el listón»: la tensión de sitio ('+p.sat+') es menor que la de fábrica ('+p.acv+') porque el objetivo es detectar defectos de montaje, no envejecer el cable.',
+  pasos:['Delimitar zona, señalizar y verificar ausencia de tensión en ambos extremos.','Poner a tierra las fases no ensayadas y las pantallas.','Conectar la fuente al conductor de la fase en ensayo mediante terminación adecuada.','Subir en escalones (0,5 U₀ · U₀ · valor de ensayo) y mantener '+p.satt+'.','Bajar, descargar y poner a tierra ≥ 5 min. Repetir en las otras dos fases.'],
+  warn:'Con extruido, NO uses c.c. en sitio: inyecta carga espacial y puede provocar fallos posteriores en servicio.'},
+
+ {code:'S-4',t:'Descargas parciales in situ',norm:(l==='MT'?'IEC 60502-2 / IEC 60885-3':'IEC 60840/62067 §16.3 · IEC 60270'),diag:'pd',diagOpts:{v:(l==='MT'?'hasta 2 U₀':'1,7 U₀ / 1,1 U₀')},
+  cap:'Acopladores en cada accesorio; medida y localización por tiempo de vuelo (TDR).',
+  stats:[['Tensión','escalones hasta '+p.sat],['Sensibilidad in situ','≤ 10 pC (típica)'],['Acoplo','capacitivo / HFCT / UHF'],['Localización','por tiempo de vuelo']],
+  medir:['Magnitud de DP en cada accesorio y en el tramo','Tensión de inicio y de extinción de DP','Posición del defecto (distancia desde el extremo)','Patrón φ-q-n para distinguir DP interna, superficial o corona'],
+  esperar:['Ausencia de DP repetitiva en empalmes y terminaciones','Ruido de fondo dominado por corona externa, no por el objeto','Si hay DP: mapa de localización y decisión de reparación antes de energizar'],
+  mnemo:'«El ensayo dice sí o no; la DP dice dónde»: combínalos siempre en el mismo montaje.',
+  pasos:['Instalar acopladores (HFCT en las conexiones de pantalla o Ck en las terminaciones).','Calibrar inyectando carga conocida en cada punto de medida.','Energizar en escalones y registrar DP en cada nivel.','Localizar los pulsos por diferencia de tiempos entre extremos.','Emitir el mapa de DP con la referencia de cada accesorio.'],
+  warn:'Sin calibración in situ, los picocoulombios que reportes son un número sin trazabilidad.'},
+
+ {code:'S-5',t:'Pantallas, cajas de enlace y cross-bonding',norm:'IEC 60840/62067 §16 · IEC 62067 Anexo · práctica de proyecto',diag:'bond',
+  cap:'Comprobación de continuidad, secuencia de cross-bonding y estado de los limitadores (SVL).',
+  stats:[['Continuidad pantalla','< 1 Ω por tramo'],['R de puesta a tierra','≤ 10 Ω (o según proyecto)'],['SVL','Uref y R aisl. verificados'],['Secuencia','rotación 1-2-3 correcta']],
+  medir:['Resistencia de continuidad de cada pantalla y de los cables de enlace','Resistencia de la puesta a tierra de cada caja','Aislamiento de la cubierta después del conexionado','Verificación de la rotación del cross-bonding con inyección de corriente'],
+  esperar:['Continuidad correcta y sin cruces invertidos','SVL sanos, con su resistencia de aislamiento y su Uref dentro de tolerancia','Cajas estancas, con la identificación y el par de apriete correctos'],
+  mnemo:'«Pantalla mal conectada = cable caliente»: un cross-bonding invertido multiplica las pérdidas y limita la ampacidad.',
+  pasos:['Verificar el esquema de conexionado contra el plano de proyecto.','Medir continuidad de cada conductor de enlace con micro-ohmímetro.','Inyectar corriente en el conductor y comprobar la circulación por las pantallas.','Medir resistencia de tierra de cada caja y del sistema.','Cerrar cajas, sellar y fotografiar el interior para el dosier.'],
+  warn:'Reponer SIEMPRE los SVL y las tierras retiradas para el ensayo de cubierta: es el olvido más común y deja el sistema desprotegido.'}
+];}
+
+function accFAT(l){const p=P.cable[l];const std=ACCSTD[l];const cond=(l!=='MT');return [
+ {code:'F-1',t:'Descargas parciales del accesorio',norm:std+' · rutina sobre el accesorio',diag:'pd',diagOpts:{v:p.pdv},
+  cap:'Accesorio montado sobre un tramo de cable patrón, con terminaciones libres de DP.',
+  stats:[['Tensión de ensayo',p.pdv],['Sensibilidad',p.pds],['Montaje','sobre cable patrón'],['Duración','≥ 10 s por nivel']],
+  medir:['DP del cuerpo premoldeado y de la interfaz con el cable','Tensión de inicio y extinción','Ruido de fondo del circuito'],
+  esperar:['Sin DP detectable a '+p.pdv+' con sensibilidad '+p.pds,'La interfaz (elastómero–XLPE) es el punto crítico: cualquier DP indica falta de presión radial o contaminación'],
+  mnemo:'«La interfaz manda»: en un accesorio, el 90 % de los defectos nacen en la superficie de contacto, no en el material.',
+  pasos:['Montar el accesorio siguiendo estrictamente la instrucción del fabricante (grasa, torque, cotas).','Dejar estabilizar la relajación del elastómero el tiempo prescrito.','Calibrar el circuito de DP e inyectar carga conocida.','Elevar a 2 U₀, bajar a '+p.pdv+' y registrar.','Documentar el nivel de ruido, la sensibilidad y el patrón medido.'],
+  warn:'La presión radial de un premoldeado cae con el tiempo tras el montaje: respeta el tiempo de espera antes de medir.'},
+
+ {code:'F-2',t:'Tensión soportada c.a. del conjunto',norm:std+' · rutina',diag:'ac',diagOpts:{v:p.acv,t:p.act},
+  cap:'Cable + accesorio como un único objeto en ensayo; pantallas del accesorio a tierra.',
+  stats:[['Tensión',p.acv],['Duración',p.act],['Objeto','cable + accesorio'],['Criterio','sin descarga ni perforación']],
+  medir:['Tensión y tiempo efectivos','Corriente de carga del conjunto','Inspección visual posterior de la superficie del accesorio'],
+  esperar:['Sin perforación, contorneo ni descarga superficial','Sin marcas de tracking en la superficie externa después del ensayo'],
+  mnemo:'«El accesorio se ensaya con su cable»: nunca se certifica suelto, siempre como sistema.',
+  pasos:['Verificar distancias de aislamiento al entorno y a tierra.','Poner a tierra pantallas, deflectores y carcasas.','Subir a '+p.acv+' de forma continua y mantener '+p.act+'.','Reducir, descargar y poner a tierra.','Inspección visual y registro fotográfico.'],
+  warn:'En terminaciones al aire, controla la humedad y la limpieza: un contorneo externo se confunde con un fallo del accesorio.'},
+
+ cond?
+ {code:'F-3',t:'Capacitancia y factor de disipación (tan δ)',norm:'IEC 60137 · '+std,diag:'tand',diagOpts:{f:'15 – 400 Hz'},
+  cap:'Medida en el aislador tipo condensador a través de su toma capacitiva (tap).',
+  stats:[['Tensión de medida','10 kV (o Um/√3)'],['tan δ','≤ 0,7 % (RIP/RIS)'],['Capacitancia','±5 % del valor de placa'],['Temperatura','20 ± 10 °C']],
+  medir:['C₁ (núcleo) y C₂ (toma) en pF','tan δ en % a 10 kV y a Um/√3','Variación de tan δ con la tensión (tip-up)'],
+  esperar:['tan δ ≤ 0,7 % en RIP y estable con la tensión (tip-up < 0,1 %)','C dentro de ±5 % del valor grabado en la placa','Valores registrados como huella para comparar en el SAT y en mantenimiento'],
+  mnemo:'«C y tan δ son la huella dactilar»: apúntalos en fábrica o no tendrás con qué comparar en obra.',
+  pasos:['Retirar la puesta a tierra de la toma capacitiva.','Conectar el puente en modo UST/GST según el esquema del fabricante.','Medir a varios escalones de tensión (2, 5, 10 kV).','Registrar temperatura y corregir según curva del fabricante.','Restituir la puesta a tierra del tap: es imprescindible en servicio.'],
+  warn:'Dejar la toma capacitiva sin poner a tierra al energizar destruye el aislador: es la causa más frecuente de fallo de terminaciones.'}
+ :
+ {code:'F-3',t:'Verificación dimensional e interferencia',norm:std+' · control de producción',diag:'contact',diagOpts:{k:'interferencia radial'},
+  cap:'Control del cuerpo premoldeado: diámetros, dureza y expansión.',
+  stats:[['Interferencia radial','según ficha del fabricante'],['Dureza','Shore A nominal ± 5'],['Diámetro interior','tolerancia del plano'],['Muestreo','por lote de producción']],
+  medir:['Diámetro interior y exterior del cuerpo','Dureza Shore A del elastómero','Ensayo de deformación permanente (compression set)','Verificación del rango de aplicación (mín./máx. Ø sobre aislamiento)'],
+  esperar:['Dimensiones dentro del plano y rango de aplicación coherente con el cable de destino','Sin porosidad, inclusiones ni rebabas en la superficie interior'],
+  mnemo:'«Rango de aplicación primero»: un premoldeado fuera de rango no sella aunque sea nuevo.',
+  pasos:['Seleccionar muestras del lote y limpiarlas.','Medir diámetros con calibre/proyector de perfiles.','Verificar dureza en tres puntos y promediar.','Contrastar con el rango de diámetros del cable a instalar.','Registrar el resultado en el certificado del lote.'],
+  warn:'Verifica siempre la compatibilidad accesorio–cable ANTES del envío: es el rechazo más caro en obra.'},
+
+ {code:'F-4',t:'Estanqueidad y hermeticidad',norm:std+' · rutina',diag:'seal',diagOpts:{p:(l==='EAT'?'SF₆ / aceite':'aceite / seco'),k:'sin fuga detectable en el ensayo'},
+  cap:'Presurización del envolvente y detección de fugas; terminaciones GIS y de exterior.',
+  stats:[['Presión de ensayo','1,3 × presión de servicio'],['Duración','≥ 30 min'],['Criterio de fuga','< 0,5 – 1 % anual'],['Método','detector de gas / burbuja']],
+  medir:['Presión inicial y final corregidas por temperatura','Punto de rocío del gas (si SF₆) y rigidez del aceite','Ausencia de trazas líquidas en juntas y bridas'],
+  esperar:['Caída de presión nula dentro de la incertidumbre del ensayo','Aceite: rigidez ≥ 60 kV/2,5 mm y humedad < 20 ppm','SF₆: pureza > 97 %, humedad < 150 ppmv'],
+  mnemo:'«Lo que respira, falla»: una terminación que pierde fluido pierde aislamiento.',
+  pasos:['Montar el conjunto y presurizar al valor de ensayo.','Estabilizar temperatura ≥ 30 min y registrar presión/temperatura.','Recorrer bridas y juntas con el detector.','Comparar presión corregida al final del periodo.','Sellar, precintar y registrar los valores de referencia.'],
+  warn:'Corrige siempre por temperatura: 10 K de variación pueden simular una fuga inexistente.'},
+
+ {code:'F-5',t:'Resistencia del conector empalmado',norm:'IEC 61238-1 · '+std,diag:'contact',diagOpts:{k:'k = R_conector / R_conductor ≤ 1'},
+  cap:'Medida a 4 hilos sobre el conector y sobre un tramo de conductor equivalente.',
+  stats:[['Factor k','≤ 1 (conector ≤ conductor)'],['Corriente','≥ 100 A c.c.'],['Ciclos térmicos','1 000 ciclos (tipo)'],['Δ temperatura','conector ≤ conductor']],
+  medir:['R del conector (mΩ) entre marcas de referencia','R del tramo de conductor equivalente','Temperatura del conector y del conductor en el ensayo de ciclos'],
+  esperar:['k = R_conector / R_conductor ≤ 1 y estable tras los ciclos térmicos','Sin deriva creciente entre ciclos (indicaría relajación del contacto)'],
+  mnemo:'«El conector nunca puede ser peor que el cable»: k ≤ 1, siempre.',
+  pasos:['Marcar los puntos de medida a la distancia normalizada.','Medir R del conector y del conductor de referencia a la misma temperatura.','Calcular k y registrar.','En ensayo de tipo, repetir tras los ciclos de calentamiento.','Adjuntar el valor a la ficha de trazabilidad del empalme.'],
+  warn:'Usa siempre la matriz y el número de compresiones del fabricante: un mal engaste no se ve, se mide.'}
+];}
+
+function accSAT(l){const p=P.cable[l];const std=ACCSTD[l];const cond=(l!=='MT');const r=[
+ {code:'S-1',t:'Verificación de montaje y trazabilidad',norm:std+' · instrucción del fabricante',diag:'contact',diagOpts:{k:'par de apriete y cotas de pelado'},
+  cap:'Control del montaje antes de energizar: cotas, limpieza, par y trazabilidad.',
+  stats:[['Cotas de pelado','± tolerancia de la instrucción'],['Par de apriete','según tabla del fabricante'],['Limpieza','disolvente prescrito, un solo sentido'],['Registro','fotos + número de lote']],
+  medir:['Cotas de corte de cubierta, pantalla y semiconductora','Par aplicado en tornillos fusible/conectores','Resistencia de contacto del conector (micro-ohmímetro)','Humedad y temperatura ambiente durante el montaje'],
+  esperar:['Todas las cotas dentro de tolerancia y superficies pulidas sin escalones','Conector con R ≤ la del conductor equivalente','Cada accesorio con su lote, montador y fecha registrados'],
+  mnemo:'«Cotas, limpieza y torque»: los tres pecados capitales del montaje en obra.',
+  pasos:['Verificar condiciones ambientales (humedad relativa y polvo) antes de abrir el kit.','Ejecutar cotas y verificar con plantilla del fabricante.','Pulir la transición semiconductora y limpiar en un solo sentido.','Aplicar el lubricante prescrito y montar dentro del tiempo de trabajo del kit.','Registrar par, lote, fotos y firma del montador.'],
+  warn:'Nunca reutilices un premoldeado ya expandido ni sustituyas la grasa por otra: la compatibilidad química es parte del diseño.'},
+
+ {code:'S-2',t:'Descargas parciales in situ en accesorios',norm:std+' · IEC 60270 / IEC 62478',diag:'pd',diagOpts:{v:(l==='MT'?'hasta 2 U₀':p.sat)},
+  cap:'Acopladores HFCT en las conexiones de pantalla de cada empalme y terminación.',
+  stats:[['Tensión','escalones hasta '+p.sat],['Sensibilidad','≤ 10 pC típica'],['Sensor','HFCT / capacitivo / UHF'],['Referencia','ensayo + huella inicial']],
+  medir:['DP por accesorio, con su nivel de tensión de inicio','Patrón φ-q-n y localización','Comparación con la huella de fábrica'],
+  esperar:['Sin DP repetitiva por encima del ruido en ningún accesorio','Cualquier DP interna (patrón simétrico en los dos semiciclos) obliga a desmontar y revisar'],
+  mnemo:'«Un empalme con DP no mejora solo»: la DP en interfaz siempre progresa hacia el fallo.',
+  pasos:['Instalar HFCT en el enlace de pantalla de cada accesorio.','Calibrar inyectando carga conocida en cada punto.','Energizar por escalones y registrar por accesorio.','Correlacionar pulsos entre sensores para localizar.','Repetir la medida tras 24 h de servicio si se acordó monitorización.'],
+  warn:'La corona de las conexiones aéreas contamina la medida: apantalla, usa filtros y valida el ruido antes de concluir.'},
+
+ {code:'S-3',t:(cond?'tan δ y capacitancia in situ':'Ensayo VLF del conjunto instalado'),
+  norm:(cond?'IEC 60137 · comparación con huella de fábrica':'IEC 60502-2 §20 · IEC 60060-3'),
+  diag:(cond?'tand':'vlf'),diagOpts:(cond?{f:'15 – 400 Hz'}:{v:'3 U₀ = 36 kV'}),
+  cap:(cond?'Medida por la toma capacitiva del aislador, comparando con el valor de fábrica.':'Ensayo VLF sobre el tramo con sus accesorios ya montados.'),
+  stats:(cond?[['tan δ','≤ 0,7 % (y ≤ +0,1 % vs. fábrica)'],['ΔC','± 5 % respecto a placa'],['Tensión','10 kV'],['Periodicidad','puesta en servicio + mantenimiento']]
+              :[['Tensión','3 U₀ = 36 kV'],['Frecuencia','0,1 Hz'],['Duración','15 – 60 min'],['Criterio','sin perforación']]),
+  medir:(cond?['C y tan δ de cada terminación, fase por fase','Temperatura ambiente y del aislador','Tendencia frente al histórico']
+             :['Tensión y tiempo efectivos','Corriente de fuga por fase','DP simultánea si el equipo lo permite']),
+  esperar:(cond?['tan δ dentro del límite y sin incremento significativo respecto a fábrica','Aumento de C > 5 % = capas del condensador perforadas → retirar de servicio']
+               :['Sin perforación ni disparo durante el ensayo','Comportamiento simétrico entre las tres fases']),
+  mnemo:(cond?'«Compara, no juzgues»: en tan δ importa más la tendencia frente a la huella que el valor absoluto.':'«VLF para MT»: permite ensayar tramos largos con equipos ligeros y transportables.'),
+  pasos:(cond?['Desconectar y descargar la terminación; retirar la tierra del tap.','Conectar el puente y medir a 2, 5 y 10 kV.','Registrar temperatura y aplicar corrección.','Comparar con el certificado de fábrica.','Reponer la puesta a tierra del tap y verificar su apriete.']
+             :['Aislar el tramo y poner a tierra las fases no ensayadas.','Conectar la fuente VLF a la fase en ensayo.','Aplicar 3 U₀ durante el tiempo acordado.','Descargar y poner a tierra ≥ 5 min.','Repetir en las tres fases y emitir protocolo.']),
+  warn:(cond?'La medida es muy sensible a la humedad superficial del aislador: mide con tiempo seco y la porcelana limpia.':'El VLF no reproduce la distribución de campo de 50 Hz: complementa siempre con medida de DP.')}
+];
+ r.push({code:'S-4',t:'Estanqueidad, presión y nivel de fluido',norm:std+' · manual de la instalación',diag:'seal',diagOpts:{p:(l==='EAT'?'SF₆ / aceite':(l==='AT'?'aceite / gel':'sellado seco')),k:'presión en zona verde a temperatura de servicio'},
+  cap:'Verificación del envolvente de la terminación tras el montaje y en la puesta en servicio.',
+  stats:[['Presión','dentro de la banda verde'],['Nivel de aceite','entre marcas mín./máx.'],['Fuga admisible','< 1 % anual'],['Punto de rocío SF₆','< −5 °C in situ']],
+  medir:['Presión y temperatura del gas o del aceite','Nivel visual en el indicador','Pureza y humedad del SF₆ en terminaciones GIS','Trazas de fluido en bridas y sellos'],
+  esperar:['Presión corregida dentro de la banda del fabricante y estable en 24 h','Sin trazas de fluido ni corrosión en bridas','Registro de valores iniciales como referencia de mantenimiento'],
+  mnemo:'«Presión corregida o no es presión»: sin la temperatura, el manómetro miente.',
+  pasos:['Leer presión/nivel y temperatura ambiente a la misma hora del día.','Corregir con la curva P-T del fabricante.','Inspeccionar bridas con detector de fugas.','Repetir la lectura a las 24 h.','Consignar los valores de referencia en el acta de puesta en servicio.'],
+  warn:'Nunca rellenes con gas o aceite distinto al especificado ni sin registrar la cantidad: invalida la garantía y la trazabilidad.'});
+
+ r.push({code:'S-5',t:'Termografía y puesta a tierra del accesorio',norm:'IEC 60840/62067 §16 · ISO 18434 (IR)',diag:'ir',diagOpts:{k:'ΔT entre fases < 1 K = normal; > 3 K = investigar'},
+  cap:'Inspección IR con carga ≥ 40 % y verificación de las conexiones de tierra.',
+  stats:[['Carga mínima','≥ 40 % de In'],['ΔT entre fases','< 1 K normal'],['ΔT de alarma','> 3 K'],['R de tierra','≤ 10 Ω o según proyecto']],
+  medir:['Temperatura de los bornes, cuerpo y conexión de tierra de cada fase','Carga en el momento de la inspección','Resistencia de la puesta a tierra de la base'],
+  esperar:['Distribución térmica simétrica entre las tres fases','Sin puntos calientes en bornes ni en la conexión de pantalla','Tierras firmes, con sección y apriete conformes al proyecto'],
+  mnemo:'«Compara fases, no grados»: en IR el diagnóstico está en la diferencia, no en el valor absoluto.',
+  pasos:['Programar la inspección con carga significativa y sin sol directo.','Ajustar emisividad (≈ 0,9) y distancia focal.','Capturar las tres fases en la misma imagen.','Registrar carga, viento y temperatura ambiente.','Emitir informe con termogramas y foto visible.'],
+  warn:'Una imagen sin la carga registrada no es evaluable: siempre anota la corriente en el momento de la toma.'});
+ return r;
+}
+
+function daFAT(l){const d=P.da[l];return [
+ {code:'F-1',t:'Medida de la tensión de referencia (Uref)',norm:'IEC 60099-4 · ensayo de rutina',diag:'ac',diagOpts:{v:'hasta Uref',f:'48 – 62 Hz',t:'≤ 10 s'},
+  cap:'Se eleva la tensión c.a. hasta obtener la corriente resistiva de referencia declarada.',
+  stats:[['Corriente de referencia','1 – 20 mA cresta resistiva'],['Tolerancia','± tolerancia declarada'],['Temperatura','20 ± 15 °C'],['Aplicación','100 % de las unidades']],
+  medir:['Uref de cada unidad o bloque de varistores','Componente resistiva de la corriente','Temperatura de la unidad en el momento del ensayo'],
+  esperar:['Uref dentro de la tolerancia declarada por el fabricante','Uref ≥ Uc × factor de diseño: garantiza margen frente a la tensión de servicio','Valor registrado en el protocolo: es la referencia para todos los ensayos SAT posteriores'],
+  mnemo:'«Uref es el DNI del descargador»: sin ese número no puedes diagnosticarlo nunca más.',
+  pasos:['Estabilizar la unidad a temperatura ambiente y registrarla.','Elevar la tensión c.a. hasta alcanzar la corriente resistiva de referencia.','Leer y registrar Uref (valor cresta/√2).','Reducir rápidamente para no calentar los varistores.','Anotar Uref y temperatura en la placa y en el protocolo.'],
+  warn:'Uref depende fuertemente de la temperatura: sin registrar T, la comparación futura no sirve.'},
+
+ {code:'F-2',t:'Tensión residual a corriente nominal',norm:'IEC 60099-4 · residual voltage',diag:'imp',diagOpts:{w:'8/20 µs',i:d.ins},
+  cap:'Impulso de corriente 8/20 µs sobre el descargador con registro de Ures en osciloscopio.',
+  stats:[['Corriente',d.ins],['Onda','8 / 20 µs'],['Ures',d.res],['Tolerancia','≤ valor declarado']],
+  medir:['Amplitud y forma de la corriente inyectada','Tensión residual de cresta (Ures)','Relación Ures / Ur (típica 2,3 – 2,6)'],
+  esperar:['Ures ≤ el valor declarado en el catálogo para '+d.ins,'Coordinación: Ures + margen ≤ BIL del equipo protegido (margen ≥ 20 %)','Forma de onda dentro de tolerancias de IEC 60060-1'],
+  mnemo:'«Ures es lo que ve el transformador»: cuanto más baja, mejor protegido está el equipo.',
+  pasos:['Montar el descargador con el shunt de medida y el divisor calibrados.','Ajustar el generador con impulsos reducidos.','Aplicar el impulso a '+d.ins+' y registrar la oscilografía.','Verificar amplitud y tiempo de frente/cola.','Comparar con el valor declarado y con el BIL del equipo protegido.'],
+  warn:'Deja enfriar entre impulsos: el ZnO caliente da valores de Ures no representativos.'},
+
+ {code:'F-3',t:'Descargas parciales internas',norm:'IEC 60099-4 · IEC 60270',diag:'pd',diagOpts:{v:'1,05 Uc'},
+  cap:'Medida de DP internas del envolvente y de la columna de varistores.',
+  stats:[['Tensión','1,05 Uc = '+(l==='MT'?'25,2 kV':(l==='AT'?'101 kV':'280 kV'))],['Criterio','≤ 10 pC'],['Ruido de fondo','≤ 5 pC'],['Aplicación','ensayo de rutina']],
+  medir:['DP interna en pC a 1,05 Uc','Ruido de fondo del circuito','Tensión de extinción de DP'],
+  esperar:['DP interna ≤ 10 pC a 1,05 Uc','Sin DP superficial ni corona atribuible al propio descargador','Circuito calibrado antes y después del ensayo'],
+  mnemo:'«Diez picoculombios y cinco de ruido»: si el ruido no es la mitad, la medida no vale.',
+  pasos:['Montar el descargador con anillos de guarda para eliminar la corona externa.','Calibrar el circuito de DP.','Elevar a 1,05 Uc y registrar durante al menos 10 s.','Reducir y descargar.','Documentar la sensibilidad alcanzada y el patrón medido.'],
+  warn:'Un DP alto en un descargador nuevo suele indicar humedad interna o mal sellado, no un varistor defectuoso.'},
+
+ {code:'F-4',t:'Estanqueidad del envolvente',norm:'IEC 60099-4 · sealing test',diag:'seal',diagOpts:{p:'aire / N₂ seco',k:'tasa de fuga por debajo del límite declarado'},
+  cap:'Comprobación del sistema de sellado y del dispositivo de alivio de presión.',
+  stats:[['Método','helio / burbuja / presión'],['Criterio','sin fuga detectable'],['Alivio de presión','verificado por diseño'],['Aplicación','100 % de las unidades']],
+  medir:['Tasa de fuga del envolvente','Integridad de juntas y del disco de alivio','Ausencia de humedad interna'],
+  esperar:['Sin fuga detectable con el método declarado','Sistema de alivio de presión libre y correctamente orientado','Superficies de porcelana o silicona sin fisuras'],
+  mnemo:'«Descargador que entra agua, descargador que explota»: la humedad es la causa n.º 1 de fallo de ZnO.',
+  pasos:['Presurizar o someter la unidad al método de ensayo declarado.','Recorrer juntas y bridas con el detector.','Verificar orientación y libertad del alivio de presión.','Registrar el resultado por número de serie.','Sellar y embalar protegiendo las bridas.'],
+  warn:'No pintes ni cubras el disco de alivio: si no puede abrir, el fallo pasa de controlado a explosivo.'},
+
+ {code:'F-5',t:'Corriente de fuga a Uc y accesorios',norm:'IEC 60099-4 · ensayo de aceptación',diag:'leak',diagOpts:{u:d.uc},
+  cap:'Medida de la corriente total y resistiva a Uc y verificación de contador y desconectador.',
+  stats:[['Tensión aplicada',d.uc],['I total',d.it],['I resistiva',d.ir],['Contador','opera con impulso de prueba']],
+  medir:['Corriente total (capacitiva + resistiva) a Uc','Componente resistiva a Uc y a 20 °C','Funcionamiento del contador de descargas y del desconectador'],
+  esperar:['I resistiva '+d.ir+' a Uc y 20 °C (valor de huella)','Contador que incrementa con impulso de prueba','Desconectador (si aplica) íntegro y correctamente montado'],
+  mnemo:'«La resistiva es la que envejece»: la capacitiva depende de la geometría, la resistiva del estado del ZnO.',
+  pasos:['Aplicar Uc a frecuencia industrial con la unidad estabilizada térmicamente.','Medir I total con la pinza y separar la resistiva con la referencia de tensión.','Registrar temperatura de la unidad.','Aplicar impulso de prueba al contador y verificar el incremento.','Anotar la huella inicial: será la referencia del SAT y del mantenimiento.'],
+  warn:'Sin la referencia de tensión de red, el analizador no puede separar Ir de Ic: la medida solo de I total es poco concluyente.'}
+];}
+
+function daSAT(l){const d=P.da[l];return [
+ {code:'S-1',t:'Inspección visual y resistencia de aislamiento',norm:'IEC 60099-5 · guía de aplicación',diag:'megger',diagOpts:{v:d.mg},
+  cap:'Megóhmetro entre borne superior y base, con el descargador desconectado y limpio.',
+  stats:[['Tensión de prueba',d.mg],['R de aislamiento','≥ '+d.ri],['Duración','1 min'],['Estado externo','sin fisuras ni tracking']],
+  medir:['R de aislamiento borne–base de cada unidad','Estado de porcelana/silicona, juntas y bridas','Limpieza y contaminación superficial','Verificación de la distancia de fuga instalada'],
+  esperar:['R de aislamiento ≥ '+d.ri+' y equilibrada entre fases','Sin fisuras, erosión ni marcas de tracking','Distancia de fuga adecuada al nivel de contaminación del emplazamiento'],
+  mnemo:'«Mira antes de medir»: la mitad de los descargadores defectuosos se detectan a simple vista.',
+  pasos:['Desconectar el descargador del sistema y del contador; descargarlo.','Limpiar la superficie externa en seco.','Aplicar '+d.mg+' durante 1 min entre borne y base.','Comparar entre fases y con el histórico.','Descargar y restituir todas las conexiones.'],
+  warn:'Una R de aislamiento baja puede deberse solo a humedad superficial: limpia y repite antes de condenar la unidad.'},
+
+ {code:'S-2',t:'Corriente de fuga total y resistiva',norm:'IEC 60099-5 · monitorización en servicio',diag:'leak',diagOpts:{u:'Uc en servicio'},
+  cap:'Medida con pinza en la conexión de tierra, con el descargador energizado a tensión de servicio.',
+  stats:[['I total',d.it],['I resistiva',d.ir],['Criterio de alarma','Ir > 2 × valor inicial'],['Corrección','a 20 °C y a Uc']],
+  medir:['I total (mA) y su tercer armónico','Componente resistiva Ir (µA)','Tensión de servicio y temperatura ambiente','Lectura del contador de descargas'],
+  esperar:['Ir dentro del rango '+d.ir+' corregido a 20 °C','Desequilibrio entre fases < 30 %','Sin tendencia creciente frente a las medidas anteriores'],
+  mnemo:'«Duplicar la resistiva es duplicar el riesgo»: Ir × 2 respecto a la huella = programa la sustitución.',
+  pasos:['Con el descargador en servicio, colocar la pinza en el cable de tierra, aguas arriba del contador.','Tomar la referencia de tensión del secundario de un TT de la misma fase.','Registrar I total, Ir, temperatura, humedad y carga.','Corregir a 20 °C y a Uc con las curvas del equipo.','Comparar con la huella de fábrica y con el histórico.'],
+  warn:'Mide con tiempo seco: la corriente superficial por humedad se suma a la lectura y simula un ZnO degradado.'},
+
+ {code:'S-3',t:'Verificación de Uref in situ',norm:'IEC 60099-5 · diagnóstico',diag:'ac',diagOpts:{v:'hasta Uref',f:'48 – 62 Hz',t:'≤ 10 s'},
+  cap:'Fuente c.a. portátil aplicada a la unidad desconectada del sistema.',
+  stats:[['Referencia de fábrica',d.ur],['Criterio','caída < 5 % vs. fábrica'],['Temperatura','corregir a 20 °C'],['Duración','lo mínimo posible']],
+  medir:['Uref medida in situ y temperatura de la unidad','Diferencia respecto al valor de fábrica','Comportamiento de la curva U-I en la zona de baja corriente'],
+  esperar:['Uref dentro del ±5 % del valor de fábrica corregido por temperatura','Una caída significativa de Uref indica degradación del ZnO → retirar de servicio'],
+  mnemo:'«Uref que baja, varistor que se va»: es el indicador más directo de envejecimiento del óxido metálico.',
+  pasos:['Desconectar la unidad y descargarla; limpiar la superficie.','Conectar la fuente c.a. y elevar hasta la corriente de referencia.','Registrar Uref y temperatura, y reducir de inmediato.','Corregir a 20 °C y comparar con el valor de fábrica.','Restituir conexiones y verificar el apriete.'],
+  warn:'No mantengas la tensión más de unos segundos: el calentamiento del ZnO altera la medida y puede iniciar avalancha térmica.'},
+
+ {code:'S-4',t:'Termografía infrarroja',norm:'IEC 60099-5 · ISO 18434',diag:'ir',diagOpts:{k:'ΔT entre fases < 1 K normal · > 2 K sospechoso'},
+  cap:'Comparación térmica de las tres fases en las mismas condiciones de carga y ambiente.',
+  stats:[['ΔT normal','< 1 K entre fases'],['ΔT sospechoso','1 – 2 K'],['ΔT crítico','> 2 – 3 K'],['Emisividad','≈ 0,9 (porcelana/silicona)']],
+  medir:['Temperatura de cada sección del descargador y de los bornes','Diferencia entre fases del mismo circuito','Condiciones de viento, sol y humedad'],
+  esperar:['Perfil térmico uniforme de arriba abajo y simétrico entre fases','Un calentamiento en la parte inferior sugiere humedad interna; en el centro, degradación del ZnO','Bornes sin puntos calientes de conexión'],
+  mnemo:'«Caliente abajo = agua; caliente en medio = varistor»: la posición del punto caliente ya es el diagnóstico.',
+  pasos:['Inspeccionar al amanecer o de noche para evitar la radiación solar.','Ajustar emisividad y distancia; encuadrar las tres fases juntas.','Capturar termograma e imagen visible del mismo encuadre.','Registrar carga, viento y temperatura ambiente.','Comparar con las inspecciones anteriores.'],
+  warn:'Un descargador con un ΔT de pocos kelvin ya está en riesgo térmico: sus pérdidas normales son mínimas.'},
+
+ {code:'S-5',t:'Contador de descargas y puesta a tierra',norm:'IEC 60099-5 · práctica de mantenimiento',diag:'bond',
+  cap:'Verificación del contador, del bypass de medida y de la conexión de tierra dedicada.',
+  stats:[['R de tierra','≤ 10 Ω (o según proyecto)'],['Contador','incrementa con impulso de prueba'],['Registro','lectura y fecha en cada visita'],['Conexión','directa y sin lazos']],
+  medir:['Lectura del contador y variación desde la última visita','Resistencia de la puesta a tierra del descargador','Estado del aislador de base y de su cableado','Continuidad y apriete de la conexión de tierra'],
+  esperar:['Contador operativo y con lectura registrada y fechada','Tierra ≤ 10 Ω, con conductor de sección adecuada y sin empalmes','Aislador de base íntegro (si el contador está instalado)'],
+  mnemo:'«El contador cuenta la historia»: sin registrar la lectura en cada visita, el dato no sirve para nada.',
+  pasos:['Anotar la lectura del contador antes de tocar nada.','Aplicar impulso de prueba y verificar el incremento.','Medir la resistencia de tierra con el método de caída de potencial.','Verificar el apriete y la sección del conductor de tierra.','Registrar lectura, fecha y número de rayos de la zona.'],
+  warn:'Un contador que no incrementa deja ciego el mantenimiento: repáralo o sustitúyelo, no lo dejes «para la próxima».'}
+];}
+
+const CARDS={};
+['MT','AT','EAT'].forEach(l=>{
+  CARDS['cable|'+l+'|FAT']=cableFAT(l); CARDS['cable|'+l+'|SAT']=cableSAT(l);
+  CARDS['acc|'+l+'|FAT']=accFAT(l);     CARDS['acc|'+l+'|SAT']=accSAT(l);
+  CARDS['da|'+l+'|FAT']=daFAT(l);       CARDS['da|'+l+'|SAT']=daSAT(l);
+});
+
+/* ============================================================
+   LÓGICA DEL MENÚ (rueda tipo click wheel)
+   ============================================================ */
+const LISTS=[EQUIPOS,NIVELES,PRUEBAS];
+const TITLES=['Equipo','Nivel de tensión','Tipo de prueba'];
+const st={step:0,idx:[0,0,0]};
+const $=id=>document.getElementById(id);
+
+function keyOf(){return EQUIPOS[st.idx[0]].id+'|'+NIVELES[st.idx[1]].id+'|'+PRUEBAS[st.idx[2]].id;}
+
+let actx=null;
+function click(){
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(),g=actx.createGain();
+    o.type='square';o.frequency.value=1750;
+    g.gain.setValueAtTime(.035,actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0005,actx.currentTime+.03);
+    o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+.035);
+  }catch(e){}
+}
+
+function renderMenu(){
+  const list=LISTS[st.step],i=st.idx[st.step];
+  $('lcdStep').textContent='Paso '+(st.step+1)+' de 3';
+  $('lcdTitle').textContent=TITLES[st.step];
+  $('lcdList').innerHTML=list.map((o,k)=>
+    '<li class="'+(k===i?'on':'')+'"><span class="arw">▸</span><span>'+o.n+'<small>'+o.s+'</small></span></li>').join('');
+  const sel=[EQUIPOS[st.idx[0]].n,NIVELES[st.idx[1]].id,PRUEBAS[st.idx[2]].id];
+  $('lcdSel').textContent=sel.slice(0,st.step+1).join(' › ');
+  $('lcdCount').textContent=(CARDS[keyOf()]||[]).length;
+  $('okLabel').textContent=st.step===2?'CONSULTAR':'OK';
+  $('okSub').textContent=st.step===2?'ver fichas':'siguiente';
+}
+function move(d){
+  const list=LISTS[st.step];
+  st.idx[st.step]=(st.idx[st.step]+d+list.length)%list.length;
+  click();renderMenu();
+}
+function forward(){
+  if(st.step<2){st.step++;click();renderMenu();}
+  else{click();openDeck();}
+}
+function back(){
+  if(!$('deck').classList.contains('show')){
+    if(st.step>0){st.step--;click();renderMenu();}
+  } else closeDeck();
+}
+
+/* --- gestos sobre la rueda --- */
+const wheel=$('wheel');
+let drag=null;
+function ang(e,r){return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI;}
+wheel.addEventListener('pointerdown',e=>{
+  const r=wheel.getBoundingClientRect();
+  drag={r,last:ang(e,r),acc:0,total:0,x:e.clientX,y:e.clientY};
+  wheel.setPointerCapture(e.pointerId);wheel.classList.add('spin');
+});
+wheel.addEventListener('pointermove',e=>{
+  if(!drag)return;
+  let a=ang(e,drag.r),d=a-drag.last;
+  if(d>180)d-=360; if(d<-180)d+=360;
+  drag.last=a;drag.acc+=d;drag.total+=Math.abs(d);
+  while(Math.abs(drag.acc)>=26){const s=drag.acc>0?1:-1;drag.acc-=26*s;move(s);}
+});
+let handled=0;                         /* evita que el clic repita la acción del pointerup */
+function endDrag(e){
+  if(!drag)return;
+  wheel.classList.remove('spin');
+  const moved=Math.hypot((e.clientX||0)-drag.x,(e.clientY||0)-drag.y);
+  if(drag.total<10&&moved<12){
+    const cx=drag.r.left+drag.r.width/2, cy=drag.r.top+drag.r.height/2;
+    const rad=Math.hypot(e.clientX-cx,e.clientY-cy);
+    handled=Date.now();
+    if(rad<=drag.r.width*0.21) forward();     /* botón central */
+    else{
+      let a=ang(e,drag.r);
+      if(a>-135&&a<=-45) back();              /* MENÚ */
+      else if(a>-45&&a<=45) move(1);          /* ▶▶ */
+      else if(a>45&&a<=135) forward();        /* ▶❙❙ */
+      else move(-1);                          /* ◀◀ */
+    }
+  }
+  try{wheel.releasePointerCapture(e.pointerId);}catch(err){}
+  drag=null;
+}
+wheel.addEventListener('pointerup',endDrag);
+wheel.addEventListener('pointercancel',()=>{drag=null;wheel.classList.remove('spin');});
+$('okBtn').addEventListener('click',e=>{e.stopPropagation();if(Date.now()-handled<500)return;forward();});
+
+/* ============================================================
+   FICHAS
+   ============================================================ */
+let deck=[],pos=0;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+function faceFront(c,tipo){
+  return '<div class="face front">'+
+   '<div class="chead"><div class="badge">'+tipo+'<b>'+c.code+'</b></div>'+
+   '<div><h2>'+esc(c.t)+'</h2><span class="norm">'+esc(c.norm)+'</span></div></div>'+
+   '<div class="fig">'+(DIAG[c.diag]?DIAG[c.diag](c.diagOpts||{}):'')+'</div>'+
+   (c.cap?'<p class="figcap">'+esc(c.cap)+'</p>':'')+
+   '<div class="stats">'+c.stats.map(s=>'<div class="stat"><span class="k">'+esc(s[0])+'</span><span class="dots"></span><span class="v">'+esc(s[1])+'</span></div>').join('')+'</div>'+
+   '<div class="sect"><h3>Datos a medir</h3><ul class="meas">'+c.medir.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>'+
+   '<div class="sect"><h3>Valores esperados / criterio</h3><ul class="ok">'+c.esperar.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>'+
+   '<div class="cfoot"><span>Ficha '+(pos+1)+' / '+deck.length+'</span><button class="flipbtn">Procedimiento ↻</button></div>'+
+  '</div>';
+}
+function faceBack(c,tipo){
+  return '<div class="face back">'+
+   '<div class="chead"><div class="badge">PASOS<b>'+c.pasos.length+'</b></div>'+
+   '<div><h2>Procedimiento</h2><span class="norm">'+esc(c.t)+'</span></div></div>'+
+   '<ol class="steps">'+c.pasos.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>'+
+   (c.warn?'<div class="warn"><b>⚠ Atención:</b> '+esc(c.warn)+'</div>':'')+
+   '<div class="mnemo"><b>Regla nemotécnica</b><i>'+esc(c.mnemo)+'</i></div>'+
+   '<div class="cfoot"><span>'+tipo+' · '+esc(c.norm)+'</span><button class="flipbtn">Volver ↻</button></div>'+
+  '</div>';
+}
+function renderCard(){
+  const c=deck[pos],tipo=PRUEBAS[st.idx[2]].id;
+  const card=$('card');
+  card.classList.remove('flip');
+  card.style.setProperty('--accent',tipo==='FAT'?'#1f5f8b':'#a8541c');
+  card.style.setProperty('--accent2',tipo==='FAT'?'#2d84bd':'#d47a2b');
+  $('inner').innerHTML=faceFront(c,tipo)+faceBack(c,tipo);
+  $('pips').innerHTML=deck.map((_,k)=>'<span class="pip '+(k===pos?'on':'')+'"></span>').join('');
+  $('inner').querySelectorAll('.flipbtn').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation();card.classList.toggle('flip');click();fit();
+  }));
+  fit();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function fit(){
+  const card=$('card'),inner=$('inner');
+  const f=inner.querySelector('.face.front'),b=inner.querySelector('.face.back');
+  if(!f||!b)return;
+  inner.style.height=(card.classList.contains('flip')?b.offsetHeight:f.offsetHeight)+'px';
+}
+window.addEventListener('resize',()=>{if($('deck').classList.contains('show'))fit();});
+function step(d){
+  if(!deck.length)return;
+  pos=(pos+d+deck.length)%deck.length;click();renderCard();
+}
+function openDeck(){
+  deck=CARDS[keyOf()]||[];pos=0;
+  if(!deck.length)return;
+  $('crumbMain').textContent=EQUIPOS[st.idx[0]].n+' · '+NIVELES[st.idx[1]].id;
+  $('crumbSub').textContent=PRUEBAS[st.idx[2]].n+' · '+NIVELES[st.idx[1]].s;
+  $('ipodwrap').classList.add('hide');$('deck').classList.add('show');
+  renderCard();
+}
+function closeDeck(){
+  $('deck').classList.remove('show');$('ipodwrap').classList.remove('hide');
+  click();window.scrollTo({top:0,behavior:'smooth'});
+}
+$('backBtn').addEventListener('click',closeDeck);
+$('prevBtn').addEventListener('click',()=>step(-1));
+$('nextBtn').addEventListener('click',()=>step(1));
+
+/* deslizar para cambiar de ficha */
+let sw=null;
+const cardEl=$('card');
+cardEl.addEventListener('touchstart',e=>{const t=e.changedTouches[0];sw={x:t.clientX,y:t.clientY};},{passive:true});
+cardEl.addEventListener('touchend',e=>{
+  if(!sw)return;const t=e.changedTouches[0];
+  const dx=t.clientX-sw.x,dy=t.clientY-sw.y;
+  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.6){step(dx<0?1:-1);}
+  sw=null;
+},{passive:true});
+
+/* teclado */
+document.addEventListener('keydown',e=>{
+  const open=$('deck').classList.contains('show');
+  if(open){
+    if(e.key==='ArrowRight'){step(1);e.preventDefault();}
+    if(e.key==='ArrowLeft'){step(-1);e.preventDefault();}
+    if(e.key===' '||e.key==='Enter'){$('card').classList.toggle('flip');fit();e.preventDefault();}
+    if(e.key==='Escape'||e.key==='Backspace'){closeDeck();e.preventDefault();}
+  }else{
+    if(e.key==='ArrowDown'){move(1);e.preventDefault();}
+    if(e.key==='ArrowUp'){move(-1);e.preventDefault();}
+    if(e.key==='Enter'||e.key==='ArrowRight'){forward();e.preventDefault();}
+    if(e.key==='Escape'||e.key==='Backspace'||e.key==='ArrowLeft'){back();e.preventDefault();}
+  }
+});
+
+renderMenu();
+</script>
+</body>
+</html>
