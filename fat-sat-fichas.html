@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#15171c">
+<meta name="color-scheme" content="dark">
+<meta name="format-detection" content="telephone=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fichas FAT/SAT">
 <title>Fichas FAT &amp; SAT · Cables, Terminales y Descargadores AT (IEC)</title>
 <style>
 :root{
@@ -18,19 +24,27 @@
   --bg:#15171c;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,body{margin:0;padding:0}
 body{
   background:
     radial-gradient(120% 90% at 50% -10%, #2a2f39 0%, #15171c 55%, #0d0e12 100%);
   color:#e9e6df;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  min-height:100vh;            /* iOS antiguo */
   min-height:100dvh;
-  padding:14px 12px calc(28px + env(safe-area-inset-bottom));
+  padding:calc(14px + env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+          calc(28px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   display:flex;flex-direction:column;align-items:center;
   overflow-x:hidden;
 }
 h1,h2,h3,h4{margin:0}
-button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button{
+  font:inherit;color:inherit;border:0;background:none;cursor:pointer;
+  touch-action:manipulation;                 /* sin retardo de doble toque en iOS */
+  -webkit-appearance:none;appearance:none;
+  -webkit-user-select:none;user-select:none;
+}
 
 /* ---------- menú de selección (mismo lenguaje visual que las fichas) ---------- */
 .menu{width:min(420px,96vw);display:flex;flex-direction:column}
@@ -48,15 +62,16 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .phead h1{font-size:1.12rem;font-weight:800;letter-spacing:.01em;text-shadow:0 1px 1px rgba(0,0,0,.3)}
 .phead p{margin:4px 0 0;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;opacity:.93}
 
-.dials{display:flex;flex-direction:column;gap:12px;margin:13px 12px 0}
+.dials{display:flex;flex-direction:column;gap:10px;margin:13px 12px 0}
 .dial{display:flex;flex-direction:column}
 .dial h3{
   font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;
   color:#6a5734;margin:0 0 6px 2px;
 }
 .drum{
-  position:relative;height:124px;perspective:640px;overflow:hidden;
+  position:relative;height:112px;perspective:640px;overflow:hidden;
   touch-action:none;cursor:ns-resize;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
   border:2px solid rgba(60,45,20,.55);border-radius:10px;
   background:
     repeating-linear-gradient(90deg, rgba(120,90,40,.12) 0 1px, transparent 1px 7px),
@@ -71,7 +86,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   border-top:2px solid rgba(60,45,20,.65);border-bottom:2px solid rgba(60,45,20,.65);
   background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0));
 }
-.slots{position:absolute;inset:0;transform-style:preserve-3d}
+.slots{position:absolute;top:0;right:0;bottom:0;left:0;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}
 .slot{
   position:absolute;left:0;right:0;top:50%;height:40px;margin-top:-20px;
   display:flex;align-items:center;justify-content:center;gap:11px;padding:0 12px;
@@ -96,6 +111,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 }
 .go:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.4)}
 .tip{margin:11px 14px 0;font-size:.63rem;line-height:1.6;color:#6a5734;text-align:center}
+.tip .kb{display:none}
+@media (hover:hover) and (pointer:fine){.tip .kb{display:inline}}
 .tip kbd{
   background:rgba(60,45,20,.12);border:1px solid rgba(60,45,20,.4);border-radius:4px;
   padding:0 4px;font-size:.6rem;font-family:inherit;
@@ -121,7 +138,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .card{
   width:100%;perspective:1400px;
 }
-.inner{display:grid;transition:transform .55s cubic-bezier(.4,.1,.2,1),height .35s ease;transform-style:preserve-3d}
+.inner{display:grid;transition:transform .55s cubic-bezier(.4,.1,.2,1),height .35s ease;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}
 .card.flip .inner{transform:rotateY(180deg)}
 .face{
   grid-area:1/1;align-self:start;backface-visibility:hidden;-webkit-backface-visibility:hidden;
@@ -133,10 +150,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   padding:0 0 12px;
 }
 .face.back{transform:rotateY(180deg)}
-/* solo la cara visible recibe pulsaciones (la oculta se despinta, pero seguía capturándolas) */
-.face.back{pointer-events:none}
-.card.flip .face.front{pointer-events:none}
-.card.flip .face.back{pointer-events:auto}
+/* solo la cara visible recibe pulsaciones y se pinta: no dependemos del
+   backface-visibility, que falla en algunos WebKit móviles */
+.face{transition:opacity 0s linear .27s}
+.face.back{pointer-events:none;opacity:0}
+.card.flip .face.front{pointer-events:none;opacity:0}
+.card.flip .face.back{pointer-events:auto;opacity:1}
 /* textura de papel */
 .paper::before{
   content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
@@ -244,6 +263,15 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 @media (min-width:760px){
   .deck{width:440px}
 }
+@media (max-height:660px){        /* móviles cortos: el panel cabe sin desplazar */
+  .drum{height:96px}
+  .dials{gap:8px}
+  .dial h3{margin-bottom:4px}
+  .tip{margin-top:8px}
+}
+@media (prefers-reduced-motion:reduce){
+  .inner,.slot,.face{transition:none}
+}
 </style>
 </head>
 <body>
@@ -257,7 +285,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
     <div class="dials" id="dials"></div>
     <div class="summary"><span class="s1" id="sum">—</span><span class="s2"><b id="cnt">0</b> fichas</span></div>
     <button class="go" id="goBtn">Consultar</button>
-    <p class="tip">Gira cada rodillo con el dedo o toca sus extremos<br><kbd>←</kbd><kbd>→</kbd> cambian de rodillo · <kbd>↑</kbd><kbd>↓</kbd> de valor · <kbd>Enter</kbd> consulta</p>
+    <p class="tip">Desliza cada rodillo con el dedo o toca sus extremos<span class="kb"><br><kbd>←</kbd><kbd>→</kbd> cambian de rodillo · <kbd>↑</kbd><kbd>↓</kbd> de valor · <kbd>Enter</kbd> consulta</span></p>
   </div>
 </div>
 
@@ -318,7 +346,7 @@ const DIAG={
   ${cable(112,76,104)}
   <path class="ln" d="M112 87v18h104v-18" stroke-dasharray="4 3"/>
   ${gnd(150,105)}
-  <text class="tg" x="166" y="112">pantalla a tierra</text>
+  <text class="tg" x="176" y="112">pantalla a tierra</text>
   ${term(216,76,'')}
   <path class="hv" d="M94 76v42"/>
   <rect class="bx" x="72" y="118" width="44" height="22" rx="4" fill="#fff8e6"/>
@@ -943,7 +971,10 @@ function keyOf(){return EQUIPOS[st.idx[0]].id+'|'+NIVELES[st.idx[1]].id+'|'+PRUE
 let actx=null;
 function click(){
   try{
-    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    actx=actx||new AC();
+    if(actx.state==='suspended')actx.resume();
     const o=actx.createOscillator(),g=actx.createGain();
     o.type='square';o.frequency.value=1750;
     g.gain.setValueAtTime(.03,actx.currentTime);
@@ -995,30 +1026,43 @@ function move(d,delta){
   st.dial=d;click();renderMenu();
 }
 
+const HAS_POINTER=('PointerEvent' in window)&&('onpointerdown' in window);
+
 function attachDrum(el){
   const d=+el.dataset.d;
   let dr=null;
-  el.addEventListener('pointerdown',e=>{
-    dr={y:e.clientY,acc:0,moved:0};
-    try{el.setPointerCapture(e.pointerId);}catch(x){}
-    st.dial=d;renderMenu();
-  });
-  el.addEventListener('pointermove',e=>{
+  const PASO=30;                                   /* px de arrastre por posición */
+  const start=y=>{dr={y:y,acc:0,moved:0};st.dial=d;renderMenu();};
+  const drag=y=>{
     if(!dr)return;
-    const dy=e.clientY-dr.y;dr.y=e.clientY;dr.acc+=dy;dr.moved+=Math.abs(dy);
-    while(Math.abs(dr.acc)>=30){const s=dr.acc>0?1:-1;dr.acc-=30*s;move(d,-s);}
-  });
-  const end=e=>{
+    const dy=y-dr.y;dr.y=y;dr.acc+=dy;dr.moved+=Math.abs(dy);
+    while(Math.abs(dr.acc)>=PASO){const s=dr.acc>0?1:-1;dr.acc-=PASO*s;move(d,-s);}
+  };
+  const finish=y=>{
     if(!dr)return;
-    if(dr.moved<8){                       /* toque simple: arriba sube, abajo baja */
+    if(dr.moved<8){                                /* toque simple: arriba sube, abajo baja */
       const r=el.getBoundingClientRect();
-      move(d,(e.clientY-r.top)<r.height/2?-1:1);
+      move(d,(y-r.top)<r.height/2?-1:1);
     }
-    try{el.releasePointerCapture(e.pointerId);}catch(x){}
     dr=null;
   };
-  el.addEventListener('pointerup',end);
-  el.addEventListener('pointercancel',()=>{dr=null;});
+  if(HAS_POINTER){
+    el.addEventListener('pointerdown',e=>{start(e.clientY);try{el.setPointerCapture(e.pointerId);}catch(x){}});
+    el.addEventListener('pointermove',e=>drag(e.clientY));
+    el.addEventListener('pointerup',e=>{finish(e.clientY);try{el.releasePointerCapture(e.pointerId);}catch(x){}});
+    el.addEventListener('pointercancel',()=>{dr=null;});
+  }else{                                           /* WebKit sin Pointer Events */
+    let tactil=0;                                  /* el táctil emite además eventos de ratón */
+    const esRaton=()=>Date.now()-tactil>800;
+    el.addEventListener('touchstart',e=>{tactil=Date.now();start(e.changedTouches[0].clientY);},{passive:true});
+    el.addEventListener('touchmove',e=>{tactil=Date.now();e.preventDefault();drag(e.changedTouches[0].clientY);},{passive:false});
+    el.addEventListener('touchend',e=>{tactil=Date.now();finish(e.changedTouches[0].clientY);},{passive:true});
+    el.addEventListener('touchcancel',()=>{tactil=Date.now();dr=null;});
+    el.addEventListener('mousedown',e=>{if(esRaton())start(e.clientY);});
+    el.addEventListener('mousemove',e=>{if(esRaton())drag(e.clientY);});
+    el.addEventListener('mouseup',e=>{if(esRaton())finish(e.clientY);});
+    el.addEventListener('mouseleave',()=>{dr=null;});
+  }
   el.addEventListener('wheel',e=>{e.preventDefault();move(d,e.deltaY>0?1:-1);},{passive:false});
   el.addEventListener('focus',()=>{st.dial=d;renderMenu();});
 }
@@ -1073,7 +1117,10 @@ function fit(){
   if(!f||!b)return;
   inner.style.height=(card.classList.contains('flip')?b.offsetHeight:f.offsetHeight)+'px';
 }
-window.addEventListener('resize',()=>{if($('deck').classList.contains('show'))fit();});
+const refit=()=>{if($('deck').classList.contains('show'))setTimeout(fit,60);};
+window.addEventListener('resize',refit);
+window.addEventListener('orientationchange',refit);
+if(window.visualViewport)window.visualViewport.addEventListener('resize',refit);
 function step(d){
   if(!deck.length)return;
   pos=(pos+d+deck.length)%deck.length;click();renderCard();
@@ -1097,13 +1144,17 @@ $('nextBtn').addEventListener('click',()=>step(1));
 /* deslizar para cambiar de ficha */
 let sw=null;
 const cardEl=$('card');
-cardEl.addEventListener('touchstart',e=>{const t=e.changedTouches[0];sw={x:t.clientX,y:t.clientY};},{passive:true});
+cardEl.addEventListener('touchstart',e=>{
+  if(e.touches.length>1){sw=null;return;}
+  const t=e.changedTouches[0];sw={x:t.clientX,y:t.clientY,t:Date.now()};
+},{passive:true});
 cardEl.addEventListener('touchend',e=>{
   if(!sw)return;const t=e.changedTouches[0];
   const dx=t.clientX-sw.x,dy=t.clientY-sw.y;
-  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.6){step(dx<0?1:-1);}
+  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.6&&Date.now()-sw.t<700){step(dx<0?1:-1);}
   sw=null;
 },{passive:true});
+cardEl.addEventListener('touchcancel',()=>{sw=null;},{passive:true});
 
 /* teclado */
 document.addEventListener('keydown',e=>{
